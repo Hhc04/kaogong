@@ -218,9 +218,10 @@ footer{text-align:center;padding:24px;color:var(--tl);font-size:12px;border-top:
 <!-- Install Banner -->
 <div class="install-banner" id="installBanner">
   <strong>📱 安装到手机桌面</strong>
-  <p style="font-size:12px;color:var(--tl);margin-top:4px">像 App 一样使用，支持离线访问</p>
+  <p style="font-size:12px;color:var(--tl);margin-top:4px" id="installGuide">像 App 一样使用，支持离线访问</p>
   <div class="btns">
-    <button class="btn btn-p" id="installBtn" onclick="installApp()">📲 安装 App</button>
+    <button class="btn btn-p" id="installBtn" onclick="installApp()" style="display:none">📲 一键安装</button>
+    <button class="btn btn-p" onclick="installApp()">📲 查看安装方法</button>
     <button class="btn" style="background:#eee" onclick="document.getElementById('installBanner').classList.remove('show')">稍后</button>
   </div>
 </div>
@@ -228,25 +229,43 @@ footer{text-align:center;padding:24px;color:var(--tl);font-size:12px;border-top:
 <script>
 // ═══════ PWA: Manifest + Service Worker ═══════
 (function(){
-  // Register manifest via blob URL
-  var manifest={name:'公考备考助手',short_name:'公考助手',description:'申论素材库+行测真题题库',start_url:'.',display:'standalone',background_color:'#FAFAF8',theme_color:'#8B1A1A',orientation:'portrait-primary',icons:[{src:'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="38" fill="#8B1A1A"/><text x="96" y="120" text-anchor="middle" font-size="80">📚</text></svg>'),sizes:'192x192',type:'image/svg+xml'},{src:'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="100" fill="#8B1A1A"/><text x="256" y="310" text-anchor="middle" font-size="200">📚</text></svg>'),sizes:'512x512',type:'image/svg+xml'}]};
+  var basePath = location.pathname.replace(/\/[^/]*$/, '/');
+  // Register manifest
+  var manifest={name:'公考备考助手',short_name:'公考助手',description:'申论素材库+行测真题题库',start_url:basePath,display:'standalone',background_color:'#FAFAF8',theme_color:'#8B1A1A',orientation:'portrait-primary',scope:basePath,icons:[{src:'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="38" fill="#8B1A1A"/><text x="96" y="120" text-anchor="middle" font-size="80">📚</text></svg>'),sizes:'192x192',type:'image/svg+xml'}]};
   var blob=new Blob([JSON.stringify(manifest)],{type:'application/json'});
   var link=document.createElement('link');link.rel='manifest';link.href=URL.createObjectURL(blob);document.head.appendChild(link);
 
-  // Register Service Worker for offline caching
+  // Service Worker
   if('serviceWorker' in navigator){
-    var swCode='self.addEventListener("install",function(e){e.waitUntil(caches.open("kaogong-v1").then(function(c){return c.addAll(["./"]);}));self.skipWaiting();});self.addEventListener("activate",function(e){e.waitUntil(self.clients.claim());});self.addEventListener("fetch",function(e){e.respondWith(caches.match(e.request).then(function(r){return r||fetch(e.request).then(function(resp){var r2=resp.clone();caches.open("kaogong-v1").then(function(c){c.put(e.request,r2);});return resp;});}));});';
+    var swCode='var CACHE="kaogong-v2";self.addEventListener("install",function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(["./"]);}));self.skipWaiting();});self.addEventListener("activate",function(e){e.waitUntil(self.clients.claim());});self.addEventListener("fetch",function(e){e.respondWith(caches.match(e.request).then(function(r){return r||fetch(e.request).then(function(resp){var r2=resp.clone();caches.open(CACHE).then(function(c){c.put(e.request,r2);});return resp;}).catch(function(){return caches.match(e.request);});}));});';
     var swBlob=new Blob([swCode],{type:'application/javascript'});
-    var swUrl=URL.createObjectURL(swBlob);
-    navigator.serviceWorker.register(swUrl).catch(function(){});
+    navigator.serviceWorker.register(URL.createObjectURL(swBlob),{scope:basePath}).catch(function(){});
   }
 
-  // Install prompt
+  // Install: show guide banner
+  var isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+  var isWechat=/MicroMessenger/i.test(navigator.userAgent);
+  var isStandalone=window.matchMedia('(display-mode: standalone)').matches;
+
+  if(!isStandalone){
+    setTimeout(function(){
+      var banner=document.getElementById('installBanner');
+      var guide=document.getElementById('installGuide');
+      if(isWechat){guide.textContent='点击右上角 ··· → 在浏览器中打开 → 即可安装到桌面';}
+      else if(isIOS){guide.textContent='点击底部 Safari 分享按钮 → 添加到主屏幕';}
+      else{guide.textContent='点击下方按钮安装，或浏览器菜单中选"添加到主屏幕"';}
+      banner.classList.add('show');
+    },2000);
+  }
+
+  // Before install prompt (Android Chrome)
   var deferredPrompt=null;
-  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;document.getElementById('installBanner').classList.add('show');});
-  window.installApp=function(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){document.getElementById('installBanner').classList.remove('show');deferredPrompt=null;});}else{alert('请用浏览器菜单中的"添加到主屏幕"来安装');document.getElementById('installBanner').classList.remove('show');}};
-  // Show banner after 3 seconds if not installed
-  setTimeout(function(){if(!window.matchMedia('(display-mode: standalone)').matches&&!deferredPrompt){document.getElementById('installBanner').classList.add('show');}},3000);
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').style.display='inline-block';});
+  window.installApp=function(){
+    if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){deferredPrompt=null;document.getElementById('installBanner').classList.remove('show');});}
+    else if(isIOS){alert('📱 iOS 安装方法：\n\n点击浏览器底部中间"分享"按钮\n→ 向下滑动找到"添加到主屏幕"\n→ 点"添加"即可\n\n之后桌面会出现"公考助手"图标');}
+    else{alert('📱 安装方法：\n\nChrome: 点右上角 ⋮ → 添加到主屏幕\nSafari: 点分享按钮 → 添加到主屏幕\n\n微信用户请先点"在浏览器中打开"');}
+  };
 })();
 // ═══════ END PWA ═══════
 </script>
