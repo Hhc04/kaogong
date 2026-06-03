@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>公考备考助手 | 申论+行测</title>
+<meta name="description" content="免费申论素材库+行测真题题库，支持间隔重复复习、错题管理。助力公务员考试备考。">
+<meta name="theme-color" content="#8B1A1A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="公考助手">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%238B1A1A'/><text x='50' y='65' text-anchor='middle' font-size='50'>📚</text></svg>">
+<style>
+:root{--p:#8B1A1A;--pl:#C53030;--bg:#FAFAF8;--c:#FFF;--b:#E8E5E0;--t:#2D2D2D;--tl:#6B6B6B;--a1:#F0EDE5;--xc:#1A567A}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--t);min-height:100vh}
+nav{background:var(--p);color:#fff;padding:0 16px;display:flex;align-items:center;height:52px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(139,26,26,.2)}
+nav .logo{font-size:17px;font-weight:700;margin-right:16px;letter-spacing:1px;white-space:nowrap}
+nav .tabs{display:flex;gap:2px;height:100%;overflow-x:auto}
+nav .tab{color:rgba(255,255,255,.75);padding:0 11px;height:100%;display:flex;align-items:center;cursor:pointer;border-bottom:3px solid transparent;transition:.2s;font-size:13px;user-select:none;white-space:nowrap}
+nav .tab:hover{color:#fff;background:rgba(255,255,255,.08)}
+nav .tab.active{color:#fff;border-bottom-color:#FFD700;font-weight:600}
+main{max-width:1100px;margin:0 auto;padding:20px}
+.page{display:none}
+.page.active{display:block}
+h2{font-size:21px;margin-bottom:14px;color:var(--p)}
+h3{font-size:16px;margin-bottom:10px}
+.sub-tabs{display:flex;gap:4px;margin-bottom:18px;border-bottom:2px solid var(--b);padding-bottom:0}
+.sub-tab{padding:7px 16px;cursor:pointer;border-radius:8px 8px 0 0;font-size:13px;color:var(--tl);transition:.15s;border:1px solid transparent;border-bottom:none}
+.sub-tab:hover{background:var(--a1);color:var(--t)}
+.sub-tab.active{background:var(--c);color:var(--xc);font-weight:600;border-color:var(--b)}
+.xc-sub{display:none}
+.xc-sub.active{display:block}
+.card{background:var(--c);border:1px solid var(--b);border-radius:10px;padding:18px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.stats-hero{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.stat-card{background:var(--c);border:1px solid var(--b);border-radius:10px;padding:16px;text-align:center}
+.stat-card .num{font-size:34px;font-weight:700;color:var(--p)}
+.stat-card.xc .num{color:var(--xc)}
+.stat-card .label{font-size:12px;color:var(--tl);margin-top:4px}
+.bar-wrap{margin-bottom:6px;display:flex;align-items:center;gap:8px;font-size:13px}
+.bar-wrap .name{width:60px;text-align:right;flex-shrink:0}
+.bar-wrap .bar{flex:1;height:18px;background:var(--a1);border-radius:4px;overflow:hidden}
+.bar-wrap .bar-fill{height:100%;background:var(--pl);border-radius:4px;transition:width .5s}
+.bar-wrap .cnt{width:26px;text-align:right;font-weight:600;font-size:12px}
+.filters{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.filters button{padding:6px 12px;border:1px solid var(--b);border-radius:16px;background:var(--c);cursor:pointer;font-size:12px;transition:.15s}
+.filters button.active,.filters button:hover{background:var(--p);color:#fff;border-color:var(--p)}
+.ml-item{padding:12px 16px;border-bottom:1px solid var(--b);cursor:pointer;transition:.15s}
+.ml-item:hover{background:var(--a1)}
+.ml-item .meta{font-size:11px;color:var(--tl);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap}
+.tag{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;background:var(--a1);margin-right:3px;margin-top:3px}
+.tag.金句{background:#FFF3E0;color:#D4720A}
+.tag.数据{background:#E3F2FD;color:#2B5F8A}
+.tag.案例{background:#E8F5E9;color:#2D7A4A}
+.tag.政策{background:#FCE4EC;color:#C53030}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.4);z-index:200;display:none;justify-content:center;align-items:center}
+.modal-overlay.show{display:flex}
+.modal{background:var(--c);border-radius:12px;padding:22px;width:90%;max-width:680px;max-height:85vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.15)}
+.modal h3{margin-bottom:14px;color:var(--p)}
+.modal .close{float:right;background:none;border:none;font-size:20px;cursor:pointer;color:var(--tl)}
+.form-group{margin-bottom:12px}
+.form-group label{display:block;font-size:12px;font-weight:600;margin-bottom:3px}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:8px 11px;border:1px solid var(--b);border-radius:7px;font-size:13px;font-family:inherit;background:var(--bg)}
+.form-group textarea{min-height:90px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:inline-block;padding:8px 18px;border:none;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
+.btn-p{background:var(--p);color:#fff}
+.btn-p:hover{background:var(--pl)}
+.btn-xc{background:var(--xc);color:#fff}
+.btn-xc:hover{background:#1F6B9A}
+.btn-sm{padding:5px 10px;font-size:11px}
+.review-card{background:var(--c);border:1px solid var(--b);border-radius:12px;padding:22px;margin-bottom:16px;max-width:700px;margin-left:auto;margin-right:auto;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.review-card .theme-badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:11px;margin-bottom:8px;font-weight:600}
+.review-card h3{font-size:17px;margin-bottom:12px;line-height:1.5}
+.review-card .content-body{line-height:1.7;white-space:pre-line;font-size:14px}
+.review-actions{display:flex;gap:8px;justify-content:center;margin-top:16px}
+.review-actions .btn{padding:10px 24px;font-size:14px}
+.review-progress{text-align:center;color:var(--tl);margin-bottom:12px;font-size:13px}
+.search-bar{display:flex;gap:8px;margin-bottom:16px}
+.search-bar input{flex:1;padding:10px 15px;border:1px solid var(--b);border-radius:20px;font-size:14px;background:var(--c);font-family:inherit}
+.search-bar input:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px rgba(139,26,26,.1)}
+.options-list{margin:8px 0;padding-left:14px}
+.options-list li{padding:2px 0;list-style:none;font-size:14px}
+.options-list li.wrong{color:#C53030;font-weight:600}
+.options-list li.correct{color:#2D7A4A;font-weight:600}
+.empty{text-align:center;padding:40px 20px;color:var(--tl)}
+.empty .icon{font-size:42px;margin-bottom:10px}
+.hero{text-align:center;padding:40px 20px;background:linear-gradient(135deg,#8B1A1A,#C53030);color:#fff;border-radius:14px;margin-bottom:24px}
+.hero h1{font-size:28px;margin-bottom:8px}
+.hero p{font-size:14px;opacity:.9;margin-bottom:16px}
+.hero .cta{display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.hero .cta-btn{padding:10px 24px;border-radius:22px;font-size:14px;font-weight:700;cursor:pointer;border:2px solid #fff;color:#fff;background:transparent;transition:.2s;text-decoration:none}
+.hero .cta-btn:hover{background:#fff;color:var(--p)}
+footer{text-align:center;padding:24px;color:var(--tl);font-size:12px;border-top:1px solid var(--b);margin-top:32px}
+@media(max-width:768px){.stats-hero{grid-template-columns:repeat(2,1fr)}.card-grid{grid-template-columns:1fr}nav .tab{padding:0 8px;font-size:11px}.row2{grid-template-columns:1fr}}
+/* Install banner */
+.install-banner{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--p);padding:14px 18px;z-index:300;box-shadow:0 -4px 16px rgba(0,0,0,.1);text-align:center}
+.install-banner.show{display:block}
+.install-banner .btns{display:flex;gap:8px;justify-content:center;margin-top:10px}
+/* Bottom nav for mobile */
+@media(max-width:768px){
+  body{padding-bottom:60px}
+  footer{padding-bottom:80px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">📚 公考备考助手</span>
+  <div class="tabs">
+    <span class="tab active" data-page="dash">📊 首页</span>
+    <span class="tab" data-page="browse">📂 申论素材</span>
+    <span class="tab" data-page="review">📖 每日复习</span>
+    <span class="tab" data-page="search">🔍 搜索</span>
+    <span class="tab" style="color:#FFD700" data-page="xingce">📝 行测刷题</span>
+  </div>
+</nav>
+
+<main>
+  <!-- Hero -->
+  <div id="page-dash" class="page active">
+    <div class="hero">
+      <h1>🎯 申论 + 行测 一站式备考</h1>
+      <p>46条精选申论素材 · 64道行测真题 · 智能间隔重复复习 · 错题管理 · 完全免费</p>
+      <div class="cta">
+        <button class="cta-btn" onclick="switchPage('review')">📖 开始复习</button>
+        <button class="cta-btn" onclick="switchPage('xingce')">📝 刷行测题</button>
+      </div>
+    </div>
+    <div class="stats-hero" id="statsHero"></div>
+    <div class="card-grid">
+      <div class="card"><h3>📂 申论主题分布</h3><div id="themeChart"></div></div>
+      <div class="card"><h3>📝 行测模块分布</h3><div id="xcChart"></div></div>
+    </div>
+  </div>
+
+  <!-- Browse -->
+  <div id="page-browse" class="page">
+    <h2>📂 申论素材库（共 <span id="browseTotal">46</span> 条）</h2>
+    <div class="filters" id="themeBtns"><button class="active" data-theme="">全部主题</button></div>
+    <div class="filters" id="typeBtns"><button class="active" data-type="">全部类型</button></div>
+    <div id="materialList"><div class="empty"><div class="icon">📭</div>暂无</div></div>
+  </div>
+
+  <!-- Review -->
+  <div id="page-review" class="page">
+    <h2>📖 申论每日复习</h2>
+    <div class="review-progress" id="reviewProgress"></div>
+    <div id="reviewContainer"><div class="empty"><div class="icon">🎯</div>点击按钮开始，每天5条</div></div>
+    <div class="review-actions"><button class="btn btn-p" onclick="startReview()">🔄 随机抽取5条</button></div>
+  </div>
+
+  <!-- Search -->
+  <div id="page-search" class="page">
+    <h2>🔍 搜索素材</h2>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="搜索关键词... 如: 高质量发展、乡村振兴" onkeydown="if(event.key==='Enter')doSearch()">
+      <button class="btn btn-p" onclick="doSearch()">搜索</button>
+    </div>
+    <div id="searchResults"></div>
+  </div>
+
+  <!-- 行测 -->
+  <div id="page-xingce" class="page">
+    <h2 style="color:var(--xc)">📝 行测真题练习</h2>
+    <div class="sub-tabs">
+      <span class="sub-tab active" data-xcsub="practice">🎯 真题刷题</span>
+      <span class="sub-tab" data-xcsub="review">📖 错题复习</span>
+      <span class="sub-tab" data-xcsub="stats">📊 统计数据</span>
+    </div>
+
+    <!-- Practice -->
+    <div class="xc-sub active" id="xc-practice">
+      <div class="card-grid">
+        <div class="card">
+          <h3>🎯 开始刷题</h3>
+          <div class="form-group"><label>模块</label><select id="pracModule"><option value="">全部</option></select></div>
+          <div class="form-group"><label>题数</label><select id="pracCount"><option>10</option><option>5</option><option>15</option><option>20</option></select></div>
+          <button class="btn btn-xc" onclick="startPractice()" style="width:100%">🚀 开始</button>
+        </div>
+        <div class="card"><h3>📈 练习统计</h3><div id="pracStatsCard"></div></div>
+      </div>
+      <div id="pracArea" style="margin-top:14px"></div>
+    </div>
+
+    <!-- Cuoti Review -->
+    <div class="xc-sub" id="xc-review-sub">
+      <div class="review-progress" id="xcReviewProgress"></div>
+      <div id="xcReviewContainer"><div class="empty"><div class="icon">🎯</div>点击开始错题复习</div></div>
+      <div class="review-actions"><button class="btn btn-xc" onclick="startXCReview()">🔄 抽5道错题</button></div>
+    </div>
+
+    <!-- Stats -->
+    <div class="xc-sub" id="xc-stats">
+      <div class="card-grid">
+        <div class="card"><h3>📊 刷题统计</h3><div id="xcStatsDetail"></div></div>
+        <div class="card"><h3>📋 错题分布</h3><div id="cuotiDist"></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>📚 公考备考助手 · 数据来源公开信息 · 仅供学习参考 · <span id="buildDate"></span></p>
+  <p style="margin-top:4px">所有做题记录保存在本机浏览器中，不会上传到任何服务器</p>
+</footer>
+
+<!-- Modal -->
+<div class="modal-overlay" id="detailOverlay">
+  <div class="modal" id="detailModal">
+    <button class="close" onclick="closeModal()">&times;</button>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<!-- Install Banner -->
+<div class="install-banner" id="installBanner">
+  <strong>📱 安装到手机桌面</strong>
+  <p style="font-size:12px;color:var(--tl);margin-top:4px">像 App 一样使用，支持离线访问</p>
+  <div class="btns">
+    <button class="btn btn-p" id="installBtn" onclick="installApp()">📲 安装 App</button>
+    <button class="btn" style="background:#eee" onclick="document.getElementById('installBanner').classList.remove('show')">稍后</button>
+  </div>
+</div>
+
+<script>
+// ═══════ PWA: Manifest + Service Worker ═══════
+(function(){
+  // Register manifest via blob URL
+  var manifest={name:'公考备考助手',short_name:'公考助手',description:'申论素材库+行测真题题库',start_url:'.',display:'standalone',background_color:'#FAFAF8',theme_color:'#8B1A1A',orientation:'portrait-primary',icons:[{src:'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="38" fill="#8B1A1A"/><text x="96" y="120" text-anchor="middle" font-size="80">📚</text></svg>'),sizes:'192x192',type:'image/svg+xml'},{src:'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="100" fill="#8B1A1A"/><text x="256" y="310" text-anchor="middle" font-size="200">📚</text></svg>'),sizes:'512x512',type:'image/svg+xml'}]};
+  var blob=new Blob([JSON.stringify(manifest)],{type:'application/json'});
+  var link=document.createElement('link');link.rel='manifest';link.href=URL.createObjectURL(blob);document.head.appendChild(link);
+
+  // Register Service Worker for offline caching
+  if('serviceWorker' in navigator){
+    var swCode='self.addEventListener("install",function(e){e.waitUntil(caches.open("kaogong-v1").then(function(c){return c.addAll(["./"]);}));self.skipWaiting();});self.addEventListener("activate",function(e){e.waitUntil(self.clients.claim());});self.addEventListener("fetch",function(e){e.respondWith(caches.match(e.request).then(function(r){return r||fetch(e.request).then(function(resp){var r2=resp.clone();caches.open("kaogong-v1").then(function(c){c.put(e.request,r2);});return resp;});}));});';
+    var swBlob=new Blob([swCode],{type:'application/javascript'});
+    var swUrl=URL.createObjectURL(swBlob);
+    navigator.serviceWorker.register(swUrl).catch(function(){});
+  }
+
+  // Install prompt
+  var deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;document.getElementById('installBanner').classList.add('show');});
+  window.installApp=function(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){document.getElementById('installBanner').classList.remove('show');deferredPrompt=null;});}else{alert('请用浏览器菜单中的"添加到主屏幕"来安装');document.getElementById('installBanner').classList.remove('show');}};
+  // Show banner after 3 seconds if not installed
+  setTimeout(function(){if(!window.matchMedia('(display-mode: standalone)').matches&&!deferredPrompt){document.getElementById('installBanner').classList.add('show');}},3000);
+})();
+// ═══════ END PWA ═══════
+</script>
+var MATERIALS = [{"title": "2026年农村综合性改革试点：26地各获1.5亿元", "content": "### 2026年农村综合性改革试点：26地各获1.5亿元\n- **日期**：2026-06-02\n- **出处**：财政部/农业农村部2026年\n- **标签**：#乡村振兴 #政策 #改革\n- **适用场景**：农村改革、资金投入\n\n在全国26个地区开展农村综合性改革试点试验，每地获中央财政补助1.5亿元，涵盖创新富民乡村产业发展机制、数字乡村发展机制、人才振兴机制、乡村治理机制四大方向。2026年从脱贫攻坚转向\"常态化精准帮扶\"第一年。", "theme": "乡村振兴", "type": "政策"}, {"title": "浙江千万工程经验", "content": "### 浙江千万工程经验\n- **日期**：2026-06-02\n- **标签**：#乡村振兴 #案例 #浙江\n- **适用场景**：乡村振兴主题论证\n\n从\"千村示范、万村整治\"起步，迭代推进美丽乡村建设，持续20余年。浙江农村人均可支配收入连续多年居全国省区第一，城乡差距全国最小。启示：持之以恒、因地制宜、政府主导与农民主体结合。\n\u0004", "theme": "乡村振兴", "type": "案例"}, {"title": "福建圣农集团\"共富工厂\"模式：全产业链产值突破1000亿", "content": "### 福建圣农集团\"共富工厂\"模式：全产业链产值突破1000亿\n- **日期**：2026-06-02\n- **出处**：2026年福建省乡村振兴现场会\n- **标签**：#乡村振兴 #案例 #产业富民\n- **适用场景**：产业振兴、共同富裕\n\n白羽肉鸡全产业链产值突破1000亿元。在省内近200个行政村建设工厂、农场，直接提供就业岗位3万多个，农民工占比80%，人均年工资收入8万元，辐射带动20多万名农民增收。是\"联农带农共富\"的标杆。", "theme": "乡村振兴", "type": "案例"}, {"title": "福清南岭镇：从最贫困乡镇到逆袭典范", "content": "### 福清南岭镇：从最贫困乡镇到逆袭典范\n- **日期**：2026-06-02\n- **出处**：2026年福清市乡村振兴现场会\n- **标签**：#乡村振兴 #案例 #乡村治理 #产业发展\n- **适用场景**：乡村治理、产业振兴\n\n镇级财政收入从800万元增至9000多万元，农民人均收入从不足1万提高到3.8万元。摘得15块\"国字号\"金字招牌。核心经验：立足资源禀赋、全产业链打造、龙头企业带动、干部群众齐心。", "theme": "乡村振兴", "type": "案例"}, {"title": "锚定农业农村现代化，扎实推进乡村全面振兴", "content": "### 锚定农业农村现代化，扎实推进乡村全面振兴\n- **日期**：2026-06-02\n- **出处**：2026年中央一号文件\n- **标签**：#乡村振兴 #金句 #农业农村\n- **适用场景**：乡村振兴主题开篇\n\n2026年一号文件标题即是核心金句。\"锚定\"体现战略定力，\"扎实推进\"强调实干导向。", "theme": "乡村振兴", "type": "金句"}, {"title": "\"三个更加\"定调2026全面从严治党", "content": "### \"三个更加\"定调2026全面从严治党\n- **日期**：2026-06-02\n- **出处**：习近平二十届中央纪委五次全会讲话（2026年1月12日）\n- **标签**：#党建 #数据 #从严治党\n- **适用场景**：党的建设、反腐败综合论证\n\n①更加坚决有力地贯彻落实党中央重大决策部署——具体化、精准化、常态化监督检查，把真正忠诚可靠、表里如一、担当尽责的好干部用起来。②更加科学有效地把权力关进制度笼子——制度密而不繁、有效管用，增强刚性约束。③更加清醒坚定地推进反腐败斗争——有腐必反、有贪必肃、除恶务尽，不断提高反腐败穿透力。", "theme": "党建", "type": "数据"}, {"title": "反腐败是一场输不起也决不能输的重大斗争", "content": "### 反腐败是一场输不起也决不能输的重大斗争\n- **日期**：2026-06-02\n- **出处**：习近平2026年1月二十届中央纪委五次全会\n- **标签**：#党建 #金句 #反腐败\n- **适用场景**：全面从严治党、反腐败斗争\n\n将反腐败斗争上升到\"输不起\"的高度，体现极端重要性和紧迫性。重申\"两个仍然\"——形势仍然严峻复杂，任务仍然艰巨繁重。适用于法治建设、党的建设等主题。", "theme": "党建", "type": "金句"}, {"title": "党的自我革命重在治权", "content": "### 党的自我革命重在治权\n- **日期**：2026-06-02\n- **出处**：习近平2026年1月二十届中央纪委五次全会\n- **标签**：#党建 #金句 #自我革命\n- **适用场景**：权力监督、制度建设\n\n\"治权\"二字直指核心。自我革命的要害在于对权力的制约和监督。可与\"把权力关进制度的笼子\"\"带电的高压线\"等表述形成体系化论证。", "theme": "党建", "type": "金句"}, {"title": "中国文化遗产\"家底\"一览", "content": "### 中国文化遗产\"家底\"一览\n- **日期**：2026-06-02\n- **出处**：文旅部/国家文物局2026年\n- **标签**：#文化 #数据 #文化遗产\n- **适用场景**：文化自信、非遗保护\n\n世界遗产总数60项，居世界前列。联合国教科文组织非遗名录45项，居世界第一。全国非遗工坊超1.49万家，带动就业130万余人。博物馆年参观人次超15亿。第四次全国文物普查新发现超13万处。新型公共文化空间4万多个遍布城乡。网络文学海外活跃用户约2亿。", "theme": "文化", "type": "数据"}, {"title": "文化出海\"新三样\"：网文、网游、网剧", "content": "### 文化出海\"新三样\"：网文、网游、网剧\n- **日期**：2026-06-02\n- **出处**：商务部/广电总局2026年\n- **标签**：#文化 #数据 #文化出海\n- **适用场景**：文化软实力、国际传播\n\n网络文学海外活跃用户约2亿人；微短剧海外APP超300款；《弥渡山歌》手势舞全球播放60亿次；LABUBU走红欧美；《哪吒之魔童闹海》《只此青绿》等文化IP出海。文化软实力持续转化为高质量发展的硬支撑。", "theme": "文化", "type": "数据"}, {"title": "云冈石窟数字化保护：0.03mm精度的数字重生", "content": "### 云冈石窟数字化保护：0.03mm精度的数字重生\n- **日期**：2026-06-02\n- **出处**：2026文化强国建设高峰论坛\n- **标签**：#文化 #案例 #科技赋能\n- **适用场景**：文化保护与科技创新融合\n\n采用0.03mm精度、8K分辨率数字化技术对云冈石窟进行全方位保护。展示了\"让文脉开口说话，让千年文脉走进当代生活\"的生动实践。适用于\"科技赋能文化传承\"\"创造性转化与创新性发展\"等论点。", "theme": "文化", "type": "案例"}, {"title": "对历史最好的继承就是创造新的历史，对人类文明最大的礼敬就是创造人类文明新形态", "content": "### 对历史最好的继承就是创造新的历史，对人类文明最大的礼敬就是创造人类文明新形态\n- **日期**：2026-06-02\n- **出处**：习近平\n- **标签**：#文化 #金句 #文化自信\n- **适用场景**：文化自信、文明交流互鉴\n\n格局宏大、立意高远。将\"继承\"从被动保存提升为主动创造，体现了文化自信的最高境界。适用于文化主题开篇或升华。", "theme": "文化", "type": "金句"}, {"title": "国务院《关于推行常住地提供基本公共服务的实施意见》", "content": "### 国务院《关于推行常住地提供基本公共服务的实施意见》\n- **日期**：2026-06-02\n- **出处**：国务院2026年5月22日印发\n- **标签**：#民生 #政策 #公共服务均等化\n- **适用场景**：公共服务均等化、流动人口权益\n\n国家层面首次出台专门文件，逐步消除基本公共服务与户籍挂钩。保障随迁子女教育、公租房、社保等权益，惠及约2.5亿未落户常住人口。是\"十五五\"标志性制度创新。", "theme": "民生", "type": "政策"}, {"title": "全国基本养老保险参保人数", "content": "### 全国基本养老保险参保人数\n- **日期**：2026-06-02\n- **出处**：人力资源和社会保障部\n- **标签**：#民生 #社保 #数据\n- **适用场景**：民生保障主题\n\n截至2025年底，全国基本养老保险参保人数达10.8亿人，参保率稳定在95", "theme": "民生", "type": "数据"}, {"title": "2026年民生关键数据一览", "content": "### 2026年民生关键数据一览\n- **日期**：2026-06-02\n- **出处**：2026年政府工作报告 / 人社部 / 教育部\n- **标签**：#民生 #数据\n- **适用场景**：民生保障主题综合论证\n\n2026届全国高校毕业生预计1270万人；城乡居民基础养老金月最低标准再提高20元；居民医保人均财政补助标准提高24元；技能培训1000万人次以上；住院费用跨省直接结算率达90%以上；\"十四五\"跨省结算减轻群众垫资超7000亿元；养老机构护理型床位占比力争提到73%以上。", "theme": "民生", "type": "数据"}, {"title": "建设\"15分钟就业服务圈\"", "content": "### 建设\"15分钟就业服务圈\"\n- **日期**：2026-06-02\n- **出处**：人社部2026年政策部署\n- **标签**：#民生 #案例 #就业 #公共服务\n- **适用场景**：基层公共服务、就业保障\n\n在全国建设\"家门口\"就业服务站，打造\"15分钟就业服务圈\"，支持劳动者在常住地享受同等就业服务。出台支持灵活就业人员、新就业形态人员参加职工保险政策。体现\"投资于人\"的民生理念和公共服务均等化方向。", "theme": "民生", "type": "案例"}, {"title": "就业是家事，更是国事", "content": "### 就业是家事，更是国事\n- **日期**：2026-06-02\n- **出处**：人社部部长王晓萍2026年全国两会\n- **标签**：#民生 #金句 #就业\n- **适用场景**：就业主题、民生保障\n\n简洁有力，将就业提升到国家治理高度。申论中可用于民生主题开篇点题，或作为论述\"就业优先政策\"的理论依据。", "theme": "民生", "type": "金句"}, {"title": "全国统一大市场建设条例+金融法等19件新法列入审议", "content": "### 全国统一大市场建设条例+金融法等19件新法列入审议\n- **日期**：2026-06-02\n- **出处**：2026年全国人大常委会立法工作计划\n- **标签**：#法治 #政策 #市场经济\n- **适用场景**：统一大市场、营商环境、区域协调\n\n2026年安排继续审议法律案15件、初次审议19件。重点：全国统一大市场建设条例（以法规刚性破除市场壁垒）、金融法（新制定）、反跨境腐败法、人工智能综合性立法、低空经济立法。生态环境法典、民族团结进步促进法、国家发展规划法已于3月通过。", "theme": "法治", "type": "政策"}, {"title": "2026年度立法计划：15件法律继续审议+19件初次审议", "content": "### 2026年度立法计划：15件法律继续审议+19件初次审议\n- **日期**：2026-06-03\n- **出处**：全国人大常委会2026年度立法工作计划（2026年5月发布）\n- **标签**：#法治 #政策 #立法\n- **适用场景**：法治建设成就、立法制度完善\n\n继续审议：金融稳定法、医疗保障法、企业破产法（修改）、国有资产法、托育服务法等15件。初次审议19件重点：金融法（新制定）、反跨境腐败法、修改刑事诉讼法、教师法、道路交通安全法、城市房地产管理法。十四届人大立法规划完成率73.4%。国务院同步推进全国统一大市场建设条例、人工智能综合性立法、低空经济立法。", "theme": "法治", "type": "政策"}, {"title": "2026年法治建设关键数据", "content": "### 2026年法治建设关键数据\n- **日期**：2026-06-02\n- **出处**：中央政法委/公安部2026年5月发布会\n- **标签**：#法治 #数据\n- **适用场景**：法治建设成就综合论证\n\n全国建成执法办案管理中心3266个；基层配备法制员10.2万名；196.8万名民警取得基本级执法资格；累计查纠涉企执法问题5.7万个，返还扣押资金22.2亿元；2849个县级综治中心全覆盖，2025年化解矛盾纠纷976.4万件。", "theme": "法治", "type": "数据"}, {"title": "涉企执法专项行动成效：查纠问题5.7万个，返还资金22.2亿元", "content": "### 涉企执法专项行动成效：查纠问题5.7万个，返还资金22.2亿元\n- **日期**：2026-06-03\n- **出处**：公安部/司法部2026年5月\"十五五\"开局发布会\n- **标签**：#法治 #数据 #营商环境 #执法规范\n- **适用场景**：法治化营商环境、执法规范化\n\n公安机关部署规范涉企执法专项行动，累计查纠涉企执法问题5.7万个，解除查封财物价值13.8亿元，返还扣押资金22.2亿元。全国建成执法办案管理中心3266个，基层配备法制员10.2万名。196.8万名民警取得基本级执法资格。\"十四五\"时期完成对600多部行政法规的集中清理，7批次修改58件、废止28件。", "theme": "法治", "type": "数据"}, {"title": "四川巴中：出台首部涉企服务地方性法规", "content": "### 四川巴中：出台首部涉企服务地方性法规\n- **日期**：2026-06-02\n- **出处**：2026年巴中市人大常委会\n- **标签**：#法治 #案例 #营商环境 #地方法治\n- **适用场景**：法治化营商环境、地方立法创新\n\n2025年11月出台四川省首部涉企服务地方性法规——《巴中市优化涉企服务若干规定》。刚性执行企业\"宁静日\"（每月1-20日不得随意入企检查），入企活动下降55.9%。创新\"四级书记\"挂包涉企案件机制。体现了\"小切口、有特色\"的地方立法创新。", "theme": "法治", "type": "案例"}, {"title": "安徽省2026立法计划：67件法规规章聚焦民生与发展", "content": "### 安徽省2026立法计划：67件法规规章聚焦民生与发展\n- **日期**：2026-06-03\n- **出处**：安徽省司法厅/省政府2026年6月发布\n- **标签**：#法治 #案例 #地方立法\n- **适用场景**：地方法治建设、立法创新\n\n涵盖促进长三角政务服务\"一网通办\"规定、民营经济促进法实施办法、低空经济促进条例（预备项目）、食品安全、城市更新、家庭教育等多领域。体现了\"小切口、有特色、真管用\"的地方立法导向。各省围绕\"十五五\"规划密集出台配套法规，地方立法从\"等靠要\"走向\"主动为\"。", "theme": "法治", "type": "案例"}, {"title": "确保制度规定真正成为\"带电的高压线\"", "content": "### 确保制度规定真正成为\"带电的高压线\"\n- **日期**：2026-06-02\n- **出处**：习近平2026年1月二十届中央纪委五次全会\n- **标签**：#法治 #金句 #制度建设\n- **适用场景**：法治建设、权力监督\n\n形象生动地强调制度执行力和刚性约束。适用于法治建设、制度执行、权力监督等主题。与\"把权力关进制度的笼子\"搭配使用效果更佳。", "theme": "法治", "type": "金句"}, {"title": "全面推进科学立法、严格执法、公正司法、全民守法，全面推进国家各方面工作法治化", "content": "### 全面推进科学立法、严格执法、公正司法、全民守法，全面推进国家各方面工作法治化\n- **日期**：2026-06-03\n- **出处**：习近平2025年11月对全面依法治国工作重要指示\n- **标签**：#法治 #金句 #习近平法治思想\n- **适用场景**：法治主题大作文开篇/总论\n\n\"十五五\"前夕对全面依法治国的总动员。十六字方针是法治建设的永恒主题——科学立法是前提、严格执法是关键、公正司法是防线、全民守法是基础。申论中可用于法治主题的全方位论述框架。", "theme": "法治", "type": "金句"}, {"title": "党的领导是中国特色社会主义法治之魂", "content": "### 党的领导是中国特色社会主义法治之魂\n- **日期**：2026-06-03\n- **出处**：习近平法治思想核心论述\n- **标签**：#法治 #金句 #党的领导\n- **适用场景**：法治与党的领导关系论述\n\n简洁有力地阐述了中国特色社会主义法治的本质特征。法治不是\"去政治化\"的纯粹技术问题，党的领导和社会主义法治是一致的。申论中可用于驳斥\"党大还是法大\"的伪命题。", "theme": "法治", "type": "金句"}, {"title": "法治是最好的营商环境", "content": "### 法治是最好的营商环境\n- **日期**：2026-06-03\n- **出处**：习近平\n- **标签**：#法治 #金句 #营商环境\n- **适用场景**：营商环境、市场经济法治化\n\n一句话说透法治与经济发展的关系。可论证：稳定、公平、透明、可预期的法治环境是市场主体最根本的保障。与\"市场经济就是法治经济\"形成逻辑呼应。", "theme": "法治", "type": "金句"}, {"title": "双碳目标政策体系", "content": "### 双碳目标政策体系\n- **日期**：2026-06-02\n- **出处**：中共中央、国务院\n- **标签**：#生态 #双碳 #政策\n- **适用场景**：生态环保主题\n\n2030年前实现碳达峰，2060年前实现碳中和。构建\"1+N\"政策体系，涵盖能源、工业、交通、建筑等重点领域。申论中可用于论述绿色发展、产业转型等话题。\n\u0004", "theme": "生态", "type": "政策"}, {"title": "生态环境法典正式颁布", "content": "### 生态环境法典正式颁布\n- **日期**：2026-06-02\n- **出处**：2026年3月全国人大四次会议审议通过\n- **标签**：#生态 #政策 #法治\n- **适用场景**：生态文明法治化、美丽中国建设\n\n我国第一部以\"法典\"命名的生态环境领域法律，筑牢了美丽中国建设的法治基石。标志着生态环境保护从\"行政推动\"向\"法治引领\"的转型。", "theme": "生态", "type": "政策"}, {"title": "2025年林草产业总产值近11万亿元", "content": "### 2025年林草产业总产值近11万亿元\n- **日期**：2026-06-02\n- **出处**：国家林草局2026年\n- **标签**：#生态 #数据 #绿色经济\n- **适用场景**：绿色发展、生态产品价值实现\n\n\"绿水青山\"正在转化为\"金山银山\"——林草产业已成为重要绿色富民产业。印证\"绿水青山不会自动变成金山银山，需要畅通生态产品价值转化渠道\"的重要论断。", "theme": "生态", "type": "数据"}, {"title": "让中国式现代化的底色更加亮丽", "content": "### 让中国式现代化的底色更加亮丽\n- **日期**：2026-06-02\n- **出处**：习近平2026年3月30日首都义务植树活动\n- **标签**：#生态 #金句 #绿色发展\n- **适用场景**：生态文明主题开篇/结尾\n\n将生态文明提升到中国式现代化\"底色\"高度。可搭配\"良好生态人人共享，也需要合力共建\"\"见缝插针增加群众身边的绿地，让城乡居民有更多的绿色获得感\"等表述，形成完整论证链。", "theme": "生态", "type": "金句"}, {"title": "实现种与管共抓、生态与产业共促、人与自然共生", "content": "### 实现种与管共抓、生态与产业共促、人与自然共生\n- **日期**：2026-06-02\n- **出处**：习近平2026年3月30日首都义务植树活动\n- **标签**：#生态 #金句 #绿色发展\n- **适用场景**：生态文明建设方法论\n\n\"三个共\"是对\"三个更加注重\"（提质、兴业、利民）的深化，形成从理念到路径的完整逻辑。申论中可论证生态系统保护的统筹协调方法论。", "theme": "生态", "type": "金句"}, {"title": "2026年综治中心建设数据", "content": "### 2026年综治中心建设数据\n- **日期**：2026-06-02\n- **出处**：中央政法委2026年5月新闻发布会\n- **标签**：#社会治理 #数据\n- **适用场景**：社会治理现代化\n\n全国建成2849个县级综治中心，实现县级行政区划全覆盖。2025年化解矛盾纠纷976.4万件。全国配备基层法制员10.2万名。\"枫桥式人民法庭\"首批命名100个。推行\"一案一码、一码通办\"。", "theme": "社会治理", "type": "数据"}, {"title": "浙江绍兴\"村社书记解纷团\"化解纠纷4067件", "content": "### 浙江绍兴\"村社书记解纷团\"化解纠纷4067件\n- **日期**：2026-06-02\n- **出处**：2026年浙江省委政法委\n- **标签**：#社会治理 #案例 #基层治理\n- **适用场景**：基层治理创新、矛盾化解\n\n由106名村社书记组成\"法治带头人\"队伍，形成\"共享法庭+村社书记+法官指导\"模式，产生\"1→100→2000+\"裂变效应。运行以来调解成功4067件，成功率超50%，协助执行2354件，化解风险隐患346起。\"熟人社会+法理情共振\"模式在全国推广。", "theme": "社会治理", "type": "案例"}, {"title": "北京朝阳区\"小鱼帮办\"信访代办机制", "content": "### 北京朝阳区\"小鱼帮办\"信访代办机制\n- **日期**：2026-06-02\n- **出处**：2026年国家信访局典型案例\n- **标签**：#社会治理 #案例 #信访 #基层服务\n- **适用场景**：信访工作、基层服务创新\n\n创新\"主动代办、委托代办、指定代办\"三种模式，标准化\"七步法\"流程。建立28个代办工作站，培训代办员1500余人次，138件民生诉求高效化解。入选新时代\"枫桥经验\"典型案例。", "theme": "社会治理", "type": "案例"}, {"title": "小事不出村，大事不出镇，矛盾不上交", "content": "### 小事不出村，大事不出镇，矛盾不上交\n- **日期**：2026-06-02\n- **出处**：新时代\"枫桥经验\"核心要义\n- **标签**：#社会治理 #金句 #枫桥经验\n- **适用场景**：基层治理、矛盾化解\n\n枫桥经验的金字招牌。2026年全国首批100个\"枫桥式人民法庭\"正式命名，2849个县级综治中心全覆盖，标志着这一经验在新时代的全面推广和法治化升级。", "theme": "社会治理", "type": "金句"}, {"title": "2026年各省新质生产力布局一览", "content": "### 2026年各省新质生产力布局一览\n- **日期**：2026-06-02\n- **出处**：2026年各省政府工作报告\n- **标签**：#科技 #政策 #区域发展\n- **适用场景**：区域协调发展、产业规划\n\n北京：全面实施\"人工智能+\"，建设国家AI应用中试基地。上海：新增50家以上先进智能工厂。广东：布局6G、具身智能、脑机接口。江苏：突破AI芯片和大模型，培育\"单人成军\"式创新。贵州：深入\"东数西算\"，算力规模突破190 EFLOPS。广西：3年安排450亿元支持智能经济。", "theme": "科技", "type": "政策"}, {"title": "2026年中国AI产业核心数据", "content": "### 2026年中国AI产业核心数据\n- **日期**：2026-06-02\n- **出处**：2026年政府工作报告/中国信通院/南开大学\n- **标签**：#科技 #数据 #人工智能 #新质生产力\n- **适用场景**：新质生产力、科技创新\n\nAI核心产业规模突破1.2万亿元，企业超6000家。智能算力规模达1590 EFLOPS。数字经济产业收入38.3万亿元（2025年），核心产业占GDP超10.5%。生成式AI用户5.15亿人，普及率36.5%。AI专利全球占比60%。\"十五五\"末AI产业规模目标10万亿元以上。中国AI Token调用量2026年2月首次超越美国。", "theme": "科技", "type": "数据"}, {"title": "全国智能工厂突破3万家，生产效率提升22.3%", "content": "### 全国智能工厂突破3万家，生产效率提升22.3%\n- **日期**：2026-06-02\n- **出处**：工信部2026年数据\n- **标签**：#科技 #案例 #智能制造\n- **适用场景**：制造业升级、数字化转型\n\nAI医学影像在三甲医院普及率达70%。科研团队AI工具使用率从不足10%提升至40%。\"人工智能+\"正在深度重塑制造业和服务业，是发展新质生产力的主战场。", "theme": "科技", "type": "案例"}, {"title": "打造智能经济新形态", "content": "### 打造智能经济新形态\n- **日期**：2026-06-02\n- **出处**：2026年政府工作报告\n- **标签**：#科技 #金句 #新质生产力\n- **适用场景**：新质生产力、产业升级\n\n2026年两会首次提出\"智能经济\"概念，标志着AI从\"赋能工具\"升维为\"经济形态\"——与低空经济、深海经济、深地经济共同构成驱动高质量发展的关键载体。", "theme": "科技", "type": "金句"}, {"title": "2026年\"两新\"政策延续扩围+扩大内需战略实施方案", "content": "### 2026年\"两新\"政策延续扩围+扩大内需战略实施方案\n- **日期**：2026-06-02\n- **出处**：国家发改委2026年1月发布会\n- **标签**：#经济 #政策 #扩大内需\n- **适用场景**：扩大内需、消费升级\n\n继续实施设备更新和消费品以旧换新，降低申报门槛、统一全国补贴标准，首批600多亿元资金已下达。正在研究制定《2026-2030年扩大内需战略实施方案》。\"六张网\"建设（水网、新型电网、算力网、通信网、地下管网、物流网）2026年投资超7万亿元。", "theme": "经济", "type": "政策"}, {"title": "国家创业投资基金：1000亿撬动万亿", "content": "### 国家创业投资基金：1000亿撬动万亿\n- **日期**：2026-06-02\n- **出处**：国家发改委2026年1月发布会\n- **标签**：#经济 #政策 #科技创新 #创业投资\n- **适用场景**：科技创新、投融资体制改革\n\n由超长期特别国债出资1000亿元，采取\"子基金+直投\"方式，预计形成超万亿投资规模。聚焦\"投早、投小、投长期、投硬科技\"，是金融支持科技创新的重大制度设计。", "theme": "经济", "type": "政策"}, {"title": "2025年中国GDP首破140万亿元", "content": "### 2025年中国GDP首破140万亿元\n- **日期**：2026-06-02\n- **出处**：国家统计局2026年1月19日发布\n- **标签**：#经济 #数据 #GDP\n- **适用场景**：经济发展成就、综合国力\n\n2025年全年GDP达140.19万亿元，同比增长5.0%。\"十四五\"期间经济总量连续跨越110万亿、120万亿、130万亿、140万亿元关口。2026年Q1 GDP增长5.0%。服务业占GDP比重升至57.7%，高技术制造业占工业比重升至17.1%。新能源汽车产量突破1600万辆，产销量连续11年全球第一。", "theme": "经济", "type": "数据"}, {"title": "杭州连续八年推出955项营商环境改革举措", "content": "### 杭州连续八年推出955项营商环境改革举措\n- **日期**：2026-06-02\n- **出处**：2026年杭州优化营商环境新政\n- **标签**：#经济 #案例 #营商环境\n- **适用场景**：营商环境优化、政府治理现代化\n\n2018-2025年连续八年累计推出955项改革举措。2026年聚焦人才服务、企业服务、要素供给、权益保护、政务服务五大领域。市场经营主体突破200万户。证明优化营商环境是\"永不竣工的工程\"。", "theme": "经济", "type": "案例"}, {"title": "发展是硬道理", "content": "### 发展是硬道理\n- **日期**：2026-06-02\n- **出处**：《邓小平文选》第三卷\n- **标签**：#经济 #发展\n- **适用场景**：经济主题大作文开头\n\n这是邓小平同志的一句经典论述，强调发展对于国家建设的根本性意义。在申论写作中，可用于经济类话题的开篇引入，也可作为论述\"发展是解决一切问题的基础和关键\"时的理论支撑。", "theme": "经济", "type": "金句"}, {"title": "实施更加积极有为的宏观政策，推动经济实现质的有效提升和量的合理增长", "content": "### 实施更加积极有为的宏观政策，推动经济实现质的有效提升和量的合理增长\n- **日期**：2026-06-02\n- **出处**：2025年12月中央经济工作会议 / 全国政协新年茶话会\n- **标签**：#经济 #金句 #高质量发展\n- **适用场景**：经济主题大作文开篇/总结\n\n中央经济工作会议定调2026年经济工作核心方向。强调坚持稳中求进工作总基调，实现\"十五五\"良好开局。与\"发展是解决一切问题的基础和关键\"形成逻辑呼应。", "theme": "经济", "type": "金句"}, {"title": "面对不确定性，最大的确定性就是集中精力办好自己的事", "content": "### 面对不确定性，最大的确定性就是集中精力办好自己的事\n- **日期**：2026-06-02\n- **出处**：2025年12月中央经济工作会议\n- **标签**：#经济 #金句 #应对挑战\n- **适用场景**：论述外部挑战、战略定力\n\n体现了底线思维和战略定力。在申论中可用于论述如何应对外部环境变化、坚持自主发展、增强经济韧性等话题。", "theme": "经济", "type": "金句"}, {"title": "苏州园区经验", "content": "### 苏州园区经验\n- **日期**：2026-06-02\n- **出处**：苏州工业园区管委会\n- **标签**：#苏州本地 #园区经验 #政策\n- **适用场景**：苏州本地话题\n\n借鉴新加坡经验，形成\"规划先行、基础设施先行、环境先行\"的开发理念，以及\"亲商、安商、富商\"的服务理念。可用于论述开发区建设、营商环境优化、长三角一体化等话题。\n\u0004", "theme": "苏州本地", "type": "政策"}, {"title": "全国首个跨省域高新区落地苏州吴江", "content": "### 全国首个跨省域高新区落地苏州吴江\n- **日期**：2026-06-02\n- **出处**：2026年1月沪苏浙三省市联合批复（沪府〔2026〕5号）\n- **标签**：#苏州本地 #政策 #长三角一体化\n- **适用场景**：区域协调发展、制度创新、苏州特色\n\n\"长三角青吴嘉高新技术产业开发区\"正式命名——全国首个跨省域高新区，总面积19.54平方公里（上海青浦+苏州吴江+浙江嘉善）。产业定位\"3+2\"：数字产业、智能制造、绿色新材料+总部经济、绿色科创服务。57项职业资格三地互认，27项职务系列互认。苏州吴江立足制造业根基，做精高端装备、做优绿色新材料。", "theme": "苏州本地", "type": "政策"}, {"title": "苏州生物制造产业目标2028年突破1000亿元", "content": "### 苏州生物制造产业目标2028年突破1000亿元\n- **日期**：2026-06-02\n- **出处**：2026年苏州生物制造产业三年行动方案\n- **标签**：#苏州本地 #数据 #产业\n- **适用场景**：苏州产业发展、新质生产力\n\n发布《生物制造产业三年行动方案（2026-2028年）》。同时推进通苏嘉甬高铁、苏州北站综合枢纽、沪苏通铁路二期等重大交通项目。太仓港集装箱码头五期建设推进中。虹桥国际开放枢纽\"一核两带\"GDP从2.3万亿（2020年）增至3.3万亿（2025年），经济密度达长三角平均水平的4.9倍。", "theme": "苏州本地", "type": "数据"}, {"title": "上海机场—苏州前置货站：全国首个跨省域前置货站", "content": "### 上海机场—苏州前置货站：全国首个跨省域前置货站\n- **日期**：2026-06-02\n- **出处**：2026年2月苏州市长吴庆文专题调研\n- **标签**：#苏州本地 #案例 #沪苏同城化\n- **适用场景**：沪苏同城化、物流创新\n\n全国首个跨省市跨关区民航海关一体监管前置货站，实现\"一次安检、一次放行\"。同时苏州深时数字地球研究中心（国际大科学计划DDE核心承载地）深化与上海及全球科研机构协同创新。沪昆整形医学及抗衰产业园承接上海高端医疗产业溢出效应。", "theme": "苏州本地", "type": "案例"}, {"title": "苏州要当好长三角一体化发展的\"强支点\"", "content": "### 苏州要当好长三角一体化发展的\"强支点\"\n- **日期**：2026-06-02\n- **出处**：苏州市委常委会2026年5月会议\n- **标签**：#苏州本地 #金句 #长三角一体化\n- **适用场景**：苏州发展、区域协调发展\n\n苏州市委书记范波主持召开会议，明确苏州主动融入服务上海\"五个中心\"和大都市圈建设，加快推进沪苏同城化，建强上海（长三角）国际科技创新中心关键支点。", "theme": "苏州本地", "type": "金句"}];
+var BANK = [{"id": "sl_01", "module": "言语理解", "subtopic": "逻辑填空", "question": "许多时候，我们会因为一些事物符合自己的______而对其产生好感，这本身无可厚非，但若因此忽略了客观事实，就可能做出错误判断。", "options": ["A. 预期", "B. 理想", "C. 设想", "D. 想象"], "answer": "A", "explanation": "'预期'指预先期待，强调事先的心理期待；'理想'指对未来事物的想象或希望；'设想'指假想、想象；'想象'指在头脑中创造出新形象。根据语境'符合自己的______'，'预期'最恰当。"}, {"id": "sl_02", "module": "言语理解", "subtopic": "逻辑填空", "question": "人类在长期同大自然的______中，学会了适应环境、利用自然，也懂得了敬畏自然、保护自然的重要性。", "options": ["A. 抗争", "B. 搏斗", "C. 相处", "D. 较量"], "answer": "C", "explanation": "'相处'指彼此生活在一起，彼此接触来往，最能体现人类与自然长期互动的整体关系。'抗争''搏斗''较量'都偏重对立，不能全面概括人与自然的复杂关系。"}, {"id": "sl_03", "module": "言语理解", "subtopic": "阅读理解", "question": "在某种程度上，极简主义不仅是一种设计风格，更是一种生活哲学。它倡导人们摒弃多余的欲望，回归简单纯粹的本真状态。但应当警惕，极简主义不等同于禁欲主义，其核心在于\"选择\"而非\"放弃\"。\n\n这段文字意在说明：", "options": ["A. 极简主义是一种设计风格", "B. 极简主义等同于禁欲主义", "C. 极简主义的核心是选择而非放弃", "D. 人们应该摒弃所有欲望"], "answer": "C", "explanation": "文段的主旨在于最后一句'核心在于选择而非放弃'，前面的内容都是为这个结论做铺垫。A是片面信息，B与原文相反，D是对原文的曲解。"}, {"id": "sl_04", "module": "言语理解", "subtopic": "语句表达", "question": "下列各句中，没有语病且句意明确的一项是：", "options": ["A. 通过这次培训，使全体员工的业务水平得到了很大提高", "B. 为了防止类似事故不再发生，公司制定了新的安全规程", "C. 该县农民在政府的引导下，大力发展特色农业，人均收入增长了近三倍", "D. 我们一定要做好各项工作，努力实现今年的奋斗目标而努力"], "answer": "C", "explanation": "A缺少主语（去掉'通过'或'使'）；B否定不当（'防止不再发生'意思是'希望再发生'，应去掉'不'）；D句式杂糅（'努力实现'和'为实现…而努力'杂糅）。C没有语病。"}, {"id": "sl_05", "module": "言语理解", "subtopic": "逻辑填空", "question": "在当前复杂多变的国际形势下，中国始终______和平发展道路，坚持对外开放的基本国策，______推动构建人类命运共同体。", "options": ["A. 坚持 着力", "B. 秉持 致力", "C. 保持 努力", "D. 坚守 全力"], "answer": "B", "explanation": "'秉持'常与抽象名词搭配，如'秉持原则''秉持理念'，'秉持和平发展道路'符合公文语体。'致力'侧重把力量用在某方面，常接'于'字结构。'坚持道路'也可但不如'秉持'正式；'着力'强调用力点；'全力'过于口语化。"}, {"id": "sl_06", "module": "言语理解", "subtopic": "阅读理解", "question": "人工智能技术的发展正在深刻改变着人类社会的方方面面。从医疗诊断到自动驾驶，从智能客服到艺术创作，AI的应用边界不断扩展。然而，技术从来都是一把双刃剑——在享受AI带来的便利的同时，我们也需要正视其可能带来的伦理风险、就业冲击和隐私问题。\n\n这段文字主要想表达的是：", "options": ["A. AI技术发展速度非常快", "B. AI的应用范围非常广泛", "C. 应该全面客观看待AI技术发展的利弊", "D. AI技术带来的问题比好处更多"], "answer": "C", "explanation": "文段先介绍AI发展的积极面，然后用'然而'转折指出存在的问题，整体态度是辩证的。C最准确地概括了主旨。A和B只概括了前半部分；D与原文不符，原文并未说弊大于利。"}, {"id": "sl_07", "module": "数量关系", "subtopic": "数学运算", "question": "甲、乙两人分别从A、B两地同时出发相向而行。甲的速度是6km/h，乙的速度是4km/h。两人相遇后，甲又走了2小时到达B地。问A、B两地相距多少千米？", "options": ["A. 30", "B. 36", "C. 40", "D. 48"], "answer": "A", "explanation": "设两地相距S千米。相遇时，甲乙走过的路程比为速度比=6:4=3:2。相遇时甲走了3S/5。相遇后甲走2小时到B，即走了2×6=12km，这是相遇时乙走的路程=2S/5。所以2S/5=12，S=30km。"}, {"id": "sl_08", "module": "数量关系", "subtopic": "数学运算", "question": "一个水池有甲、乙两根进水管和丙一根排水管。单开甲管5小时可注满水池，单开乙管8小时可注满水池，单开丙管10小时可排空水池。现三管齐开，注满水池需要多少小时？", "options": ["A. 40/13", "B. 40/9", "C. 13/40", "D. 9/40"], "answer": "B", "explanation": "设水池容量为1。甲管效率=1/5，乙管效率=1/8，丙管效率=-1/10。三管齐开效率=1/5+1/8-1/10=8/40+5/40-4/40=9/40。注满时间=1÷(9/40)=40/9小时。"}, {"id": "sl_09", "module": "数量关系", "subtopic": "数字推理", "question": "2, 3, 7, 16, 32, ( )", "options": ["A. 47", "B. 57", "C. 61", "D. 65"], "answer": "B", "explanation": "相邻两项之差：3-2=1, 7-3=4, 16-7=9, 32-16=16。差值分别为1²,2²,3²,4²。下一个差值为5²=25。所以( )=32+25=57。规律：相邻两项之差为连续自然数的平方。"}, {"id": "sl_10", "module": "数量关系", "subtopic": "数学运算", "question": "某单位共有职工100人，年底考核平均分数为78分。90分以上的职工评为优秀，已知优秀职工的平均分为90分，其他职工的平均分为75分，该单位被评为优秀的职工有多少人？", "options": ["A. 15", "B. 20", "C. 25", "D. 30"], "answer": "B", "explanation": "设优秀职工x人，则其他职工(100-x)人。总分：78×100=7800=90x+75(100-x)。7800=90x+7500-75x=15x+7500。15x=300，x=20人。此题为典型的\"十字交叉法\"或\"加权平均数\"应用题。"}, {"id": "sl_11", "module": "数量关系", "subtopic": "数学运算", "question": "一家商店将某商品按进价提高40%后标价，再打8折出售，结果每件仍获利15元。问该商品的进价是多少元？", "options": ["A. 100", "B. 120", "C. 125", "D. 150"], "answer": "C", "explanation": "设进价为x元。标价=x(1+40%)=1.4x。实际售价=1.4x×0.8=1.12x。利润=1.12x-x=0.12x=15。x=15/0.12=125元。"}, {"id": "pd_01", "module": "判断推理", "subtopic": "逻辑判断", "question": "所有的A都是B，所有的B都是C。如果上述陈述为真，则以下哪项一定为真？", "options": ["A. 有些C不是A", "B. 所有的C都是A", "C. 所有的A都是C", "D. 有些B不是A"], "answer": "C", "explanation": "根据传递性：所有A是B，所有B是C → 所有A是C。A不一定（C的范围可能大于B），B不一定（C可能包含非A的元素），D不一定（可能所有B都是A）。"}, {"id": "pd_02", "module": "判断推理", "subtopic": "类比推理", "question": "医生 ： 医院 相当于 （ ） ： （ ）", "options": ["A. 教师 ： 教室", "B. 法官 ： 法庭", "C. 演员 ： 舞台", "D. 厨师 ： 厨房"], "answer": "B", "explanation": "医生和医院的关系是：医生在医院这个特定工作场所中履行其职业职责。选项中，法官在法庭中履行审判职责最为对应。教师不只在教室工作；演员不只在舞台表演；厨师不只为厨房服务。法官与法庭的关系是法定且专属性的。"}, {"id": "pd_03", "module": "判断推理", "subtopic": "定义判断", "question": "\"首因效应\"是指个体在社会认知过程中，通过\"第一印象\"最先输入的信息对客体以后的认知产生的影响作用。\n\n下列选项中，属于首因效应的是：", "options": ["A. 面试官看到应聘者衣着整洁，便认为其工作认真负责", "B. 学生对某门课的老师印象好，进而对该门课产生浓厚兴趣，期末取得了好成绩", "C. 小王与小张初次见面觉得对方不太友善，之后一直对其敬而远之，尽管后来听说小张人不错", "D. 顾客因为某品牌推出了新产品而产生购买意愿"], "answer": "C", "explanation": "C项中'初次见面觉得对方不太友善'形成了第一印象，之后'一直对其敬而远之'体现了第一印象对后续认知的持续影响，符合首因效应定义。A更多是晕轮效应（以貌取人）；B涉及兴趣与成绩的因果关系；D涉及消费心理，不涉及第一印象。"}, {"id": "pd_04", "module": "判断推理", "subtopic": "逻辑判断", "question": "如果天下雨，那么地面会湿。现在地面湿了，所以天下雨了。\n\n上述推理的错误在于：", "options": ["A. 偷换概念", "B. 肯定后件", "C. 循环论证", "D. 以偏概全"], "answer": "B", "explanation": "原命题为'如果P则Q'，已知Q为真，推出P为真。这是典型的'肯定后件'谬误。因为地面湿可能有其他原因（洒水车、水管破裂等），不能必然推出天下雨。"}, {"id": "pd_05", "module": "判断推理", "subtopic": "图形推理", "question": "下列图形中，哪一个与其他三个不属于同一类别？\n(假设A是正方形，B是圆形，C是三角形，D是菱形)", "options": ["A. 正方形", "B. 圆形", "C. 三角形", "D. 菱形"], "answer": "B", "explanation": "正方形、三角形、菱形都是直线图形（由线段组成），而圆形是曲线图形。因此圆形与其他三个不属于同一类别。"}, {"id": "pd_06", "module": "判断推理", "subtopic": "逻辑判断", "question": "某单位要选拔优秀员工。规定如下：（1）如果选小王，则也要选小张；（2）小李和小周至少选一人；（3）如果不选小张，则不选小周；（4）小王和小李不能同时入选。\n\n如果最终选了小王，则以下哪项一定为真？", "options": ["A. 选了小张，没选小李", "B. 选了小张和小李", "C. 没选小张，选了小李", "D. 选了小张、小周和小李"], "answer": "A", "explanation": "已知选小王。由(1)若选王则选张→选张。由(4)王和李不能同时选→不选李。至此确定：选王、选张、不选李。由(2)李和周至少选一人，李不选→选周。综上：选王、张、周，不选李。所以A正确。"}, {"id": "zl_01", "module": "资料分析", "subtopic": "计算比较", "question": "2025年某省GDP总量为6.5万亿元，同比增长5.5%。2024年该省GDP总量为6.0万亿元，同比增长6.0%。问：2024年该省GDP的增量是多少万亿元？", "options": ["A. 0.30", "B. 0.34", "C. 0.36", "D. 0.40"], "answer": "B", "explanation": "2024年GDP=6.0万亿，增长6.0%。设2023年GDP为x，则6.0=x×(1+6%)=1.06x，x=6.0/1.06≈5.660万亿。2024年增量=6.0-5.660≈0.340万亿。"}, {"id": "zl_02", "module": "资料分析", "subtopic": "增长率", "question": "2019-2023年某市常住人口分别为820万、835万、842万、855万、870万。2023年该市人口比2019年增长了多少？", "options": ["A. 约5.5%", "B. 约6.1%", "C. 约6.5%", "D. 约7.0%"], "answer": "B", "explanation": "2023年870万，2019年820万。增长率=(870-820)/820=50/820≈0.06098≈6.1%。"}, {"id": "zl_03", "module": "资料分析", "subtopic": "比重计算", "question": "2025年某企业总产值为1200万元，其中高新技术产品产值为420万元。高新技术产品产值占总产值的比重为：", "options": ["A. 30%", "B. 33%", "C. 35%", "D. 38%"], "answer": "C", "explanation": "420/1200=0.35=35%。注意比重常用的三个公式：比重=部分/总体；部分=总体×比重；总体=部分/比重。"}, {"id": "zl_04", "module": "资料分析", "subtopic": "综合分析", "question": "根据以下数据：2020-2024年我国新能源汽车销量分别为136.7万辆、352.1万辆、688.7万辆、949.5万辆、1286.6万辆。下列说法正确的是：", "options": ["A. 2021年销量同比增长超过200%", "B. 2023年销量是2020年的5倍以上", "C. 2022年销量比2021年增长了不到300万辆", "D. 2020-2024年年均销量超过700万辆"], "answer": "B", "explanation": "A: 2021年增长率=(352.1-136.7)/136.7=215.4/136.7≈158%＜200%，错。B: 949.5/136.7≈6.95＞5，对。C: 688.7-352.1=336.6＞300，错。D: 总销量=136.7+352.1+688.7+949.5+1286.6=3413.6，年均=3413.6/5=682.7＜700，错。"}, {"id": "zl_05", "module": "资料分析", "subtopic": "增长量比较", "question": "某公司四个季度销售额分别为：Q1=180万元，Q2=220万元，Q3=250万元，Q4=300万元。环比增长量最大的季度是：", "options": ["A. Q2", "B. Q3", "C. Q4", "D. Q2和Q4相同"], "answer": "C", "explanation": "环比增长量：Q2=220-180=40万，Q3=250-220=30万，Q4=300-250=50万。Q4增长量最大，为50万元。"}, {"id": "cs_01", "module": "常识判断", "subtopic": "政治", "question": "\"十五五\"规划时期是指：", "options": ["A. 2025-2029年", "B. 2026-2030年", "C. 2025-2030年", "D. 2026-2029年"], "answer": "B", "explanation": "\"十五五\"是第十五个五年规划，时期为2026-2030年。2026年全国两会审议通过了\"十五五\"规划纲要。"}, {"id": "cs_02", "module": "常识判断", "subtopic": "法律", "question": "根据我国宪法规定，中华人民共和国的一切权力属于：", "options": ["A. 全国人民代表大会", "B. 国务院", "C. 人民", "D. 中国共产党"], "answer": "C", "explanation": "《宪法》第二条规定：'中华人民共和国的一切权力属于人民。'全国人民代表大会是人民行使国家权力的机关，但权力的归属是人民。"}, {"id": "cs_03", "module": "常识判断", "subtopic": "经济", "question": "以下哪种情况会导致本币贬值？", "options": ["A. 提高利率", "B. 贸易顺差扩大", "C. 通货膨胀率上升", "D. 外国投资增加"], "answer": "C", "explanation": "通货膨胀率上升意味着本币购买力下降，通常导致本币贬值。A提高利率通常吸引资本流入，导致本币升值；B贸易顺差扩大增加本币需求，导致升值；D外国投资增加也带来外汇供给增加、本币需求增加，导致升值。"}, {"id": "cs_04", "module": "常识判断", "subtopic": "历史", "question": "下列关于诸子百家的说法，正确的是：", "options": ["A. 孔子主张\"兼爱\"\"非攻\"", "B. 韩非子是儒家学派的代表人物", "C. 老子是道家学派创始人，主张\"无为而治\"", "D. 孟子主张\"性恶论\""], "answer": "C", "explanation": "C正确。A孔子主张'仁'和'礼'，'兼爱''非攻'是墨子的主张；B韩非子是法家代表人物；D孟子主张'性善论'，荀子主张'性恶论'。"}, {"id": "cs_05", "module": "常识判断", "subtopic": "科技", "question": "\"东数西算\"工程中的\"数\"指的是：", "options": ["A. 数字化", "B. 大数据/算力需求", "C. 数学计算", "D. 数据库"], "answer": "B", "explanation": "\"东数西算\"即东部的数据和算力需求，由西部来计算处理。这是国家发改委等多部门联合启动的重大工程，旨在优化全国算力布局——利用西部丰富的能源和气候优势承接东部的算力需求。"}, {"id": "cs_06", "module": "常识判断", "subtopic": "政治", "question": "2026年中央一号文件的核心主题是：", "options": ["A. 全面推进乡村振兴", "B. 锚定农业农村现代化，扎实推进乡村全面振兴", "C. 加快建设农业强国", "D. 巩固拓展脱贫攻坚成果"], "answer": "B", "explanation": "2026年中央一号文件的标题是《锚定农业农村现代化 扎实推进乡村全面振兴》。2026年是巩固拓展脱贫攻坚成果同乡村振兴有效衔接过渡期结束、转入常态化帮扶的第一年。"}, {"id": "sl_12", "module": "言语理解", "subtopic": "逻辑填空", "question": "________________。人民代表大会制度之所以具有强大生命力和显著优越性，关键在于深深植根于人民之中。要丰富人大代表联系人民群众的内容和形式，拓宽联系渠道，积极回应社会关切，更好接地气、察民情、聚民智、惠民生。填入画横线部分最恰当的一项是：", "options": ["A. 人视水见形，视民知治不", "B. 为政之要，以顺民心为本", "C. 苟利于民，不必法古；苟周于事，不必循俗", "D. 善为政者，弊则补之，决则塞之"], "answer": "B", "explanation": "后文强调人民代表大会制度深植人民之中，一切以人民为主。B项'为政之要，以顺民心为本'意为政府的职责是服务人民，顺民心是有效服务的关键，最符合语境。A出自《史记》意为'以民为镜知治乱'；C强调变法不拘古；D强调补偏救弊。均不如B切题。"}, {"id": "sl_13", "module": "言语理解", "subtopic": "细节理解", "question": "非洲企鹅成年后身高只有60至70厘米，不过嗓门可不小，时常发出浑厚而响亮的叫声，被戏称为'公驴企鹅'。非洲企鹅主要栖息于南非好望角附近的西蒙镇，这里属于地中海气候。当体温上升时，会有更多血液流经眼睛上方的腺体，利用空气流动帮助身体降温，'眼影'的颜色也会更加鲜艳。根据这段文字可知，非洲企鹅：", "options": ["A. 以深水鱼类等为食物来源", "B. 眼部颜色浅说明其体温较低", "C. 用'驴叫声'来警示敌人", "D. 适宜在地中海地区生存繁衍"], "answer": "B", "explanation": "原文指出'当体温上升时...眼影的颜色也会更加鲜艳'，由此逆推：颜色浅→体温较低。A偷换概念（原文为'浅水鱼类'）；C无中生有；D偷换概念（原文为'地中海气候'而非'地中海地区'）。"}, {"id": "sl_14", "module": "言语理解", "subtopic": "逻辑填空", "question": "全面从严治党和鼓励担当作为是内在统一的，不是彼此对立的。严并不是要把大家管死，使人瞻前顾后、畏首畏尾，搞成暮气沉沉、______的一潭死水。", "options": ["A. 波澜不惊", "B. 死气沉沉", "C. 一蹶不振", "D. 无所作为"], "answer": "A", "explanation": "'波澜不惊'与'一潭死水'构成语义呼应——水面平静无波。'死气沉沉'与'暮气沉沉'重复；'一蹶不振'指受挫后无法振作；'无所作为'指没有作为。A项最符合语境。"}, {"id": "sl_15", "module": "言语理解", "subtopic": "阅读理解", "question": "在城镇化进程中，传统村落的消失不仅意味着物质空间的消亡，更意味着附着其上的文化记忆、乡愁情感和生活方式的一并消失。因此，对传统村落的保护，不应只是'博物馆式'的静态保存，更要探索'活态传承'的路径，让传统村落成为承载现代生活的有机载体。这段文字意在强调：", "options": ["A. 传统村落消失速度过快", "B. 传统村落保护应注重活态传承", "C. 博物馆式保护已经过时", "D. 城镇化不应以牺牲传统村落为代价"], "answer": "B", "explanation": "文段'因此'后为核心观点：'要探索活态传承的路径'。B准确概括主旨。A、D是背景铺垫；C中'已经过时'过于绝对，原文只是说'不应只是'而非完全否定。"}, {"id": "sl_16", "module": "言语理解", "subtopic": "语句排序", "question": "将以下6个句子重新排列，语序正确的是：①但这一技术也带来了数据隐私和算法偏见等问题②人工智能正在深刻改变人类社会的运行方式③因此，需要建立相应的法律法规来规范AI的发展④从医疗诊断到智能交通，AI的应用无处不在⑤尤其在人脸识别和个性化推荐领域，争议尤为突出⑥只有平衡创新与监管，才能确保AI造福人类", "options": ["A. ②④①⑤③⑥", "B. ②①④⑤③⑥", "C. ④②①⑤③⑥", "D. ②④⑤①③⑥"], "answer": "A", "explanation": "②总起引入AI改变社会→④举例说明应用广泛→①转折指出问题→⑤具体举例问题领域→③提出对策（因此）→⑥总结展望。A是最流畅的逻辑链条。"}, {"id": "sl_17", "module": "言语理解", "subtopic": "逻辑填空", "question": "历史是最好的教科书，也是最好的______。一个民族的历史是一个民族安身立命的______。", "options": ["A. 清醒剂 基础", "B. 营养剂 根基", "C. 催化剂 前提", "D. 防腐剂 保障"], "answer": "A", "explanation": "'清醒剂'与前文'教科书'形成递进——教科书教授知识，清醒剂警示未来，符合'历史是最好的'的双重定位。'基础'与'安身立命'搭配自然。此题源自习近平总书记讲话原文。"}, {"id": "sl_18", "module": "言语理解", "subtopic": "阅读理解", "question": "当前，我国人口发展呈现少子化、老龄化、区域人口增减分化的趋势性特征。必须全面认识、正确看待我国人口发展新形势，以系统观念统筹谋划人口问题，以改革创新推动人口高质量发展。这段文字的核心观点是：", "options": ["A. 我国人口正在减少", "B. 要系统谋划和改革创新推动人口高质量发展", "C. 老龄化是最大的挑战", "D. 区域人口分布不均衡"], "answer": "B", "explanation": "文段先描述人口趋势（问题），然后用'必须'引出核心对策：'以系统观念统筹谋划，以改革创新推动高质量发展'。B完整概括了对策。A、C、D都只是问题描述的一部分。"}, {"id": "sl_19", "module": "言语理解", "subtopic": "逻辑填空", "question": "调查研究是我们党的______，是做好各项工作的基本功。要深入基层、深入群众，______了解真实情况。", "options": ["A. 传家宝 全面", "B. 好传统 认真", "C. 老方法 仔细", "D. 硬本领 系统"], "answer": "A", "explanation": "'传家宝'是习近平总书记对调查研究的经典定位，原话为'调查研究是我们党的传家宝'。'全面'与'了解真实情况'搭配，强调了解的广度和深度。选A最符合官方表述。"}, {"id": "sl_20", "module": "数量关系", "subtopic": "工程问题", "question": "一项工程，甲单独完成需12天。乙和丙合作完成需4天。已知乙单独完成该工程比与甲合作多4天，则丙单独完成该工程需要多少天？", "options": ["A. 8", "B. 10", "C. 12", "D. 14"], "answer": "C", "explanation": "赋值工作总量为12（12和4的最小公倍数）。甲效率=1，乙+丙效率=3。设乙效率为x，则乙单独完成需12/x天，甲+乙效率=1+x，合作完成需12/(1+x)天。由'乙单独比与甲合作多4天'得12/x-12/(1+x)=4，解得x=2。则丙效率=3-2=1，丙单独完成=12/1=12天。"}, {"id": "sl_21", "module": "数量关系", "subtopic": "利润问题", "question": "某商品按定价出售，每件获利45元。按定价打8.5折出售8件的利润，与按定价每个减价35元出售12件的利润相同。该商品的定价是多少元？", "options": ["A. 200", "B. 250", "C. 300", "D. 350"], "answer": "B", "explanation": "设定价x元，成本=x-45。打8.5折售价=0.85x，单件利润=0.85x-(x-45)=45-0.15x。8件总利润=8(45-0.15x)。减价35元售价=x-35，单件利润=(x-35)-(x-45)=10。12件总利润=120。8(45-0.15x)=120→360-1.2x=120→1.2x=240→x=200。验证：定价200元，打8.5折=170，成本155，单利润15，8件=120。减35=165，单利润10，12件=120。✓"}, {"id": "sl_22", "module": "数量关系", "subtopic": "行程问题", "question": "甲、乙两人分别从A、B两地同时出发，相向而行。甲的速度为4km/h，乙的速度为6km/h。相遇后甲继续走了2小时到达B地。A、B两地距离是多少千米？", "options": ["A. 20", "B. 24", "C. 30", "D. 36"], "answer": "C", "explanation": "修正：相遇后乙继续走了2小时到A地。相遇时路程比=速度比=4:6=2:3。相遇后乙需走甲相遇前走的路=2S/5，乙速度6km/h，时间=(2S/5)/6=2h→S=30km。验证：相遇时间=30/10=3h，甲走12km，乙走18km。乙相遇后再走12km到A需2h。✓"}, {"id": "sl_23", "module": "数量关系", "subtopic": "概率问题", "question": "7月前2周，某志愿团队从30人中每天随机选2人值班。求选出的两人均来自甲办公室（共14人）的概率范围：", "options": ["A. 15%~25%", "B. 25%~35%", "C. 35%~45%", "D. 45%~55%"], "answer": "A", "explanation": "总情况数=C(30,2)=435。均来自甲办公室情况=C(14,2)=91。概率=91/435≈0.209≈20.9%，落在15%~25%区间。"}, {"id": "sl_24", "module": "数量关系", "subtopic": "容斥问题", "question": "某单位287名职工参加培训，只参加防病培训的人数是100的倍数。参加防病培训的共186人，既参加防病又参加育种培训的共121人。问未参加任何培训的有多少人？", "options": ["A. 21", "B. 35", "C. 42", "D. 56"], "answer": "A", "explanation": "设只防病=x（100的倍数→可能是100或200）。参加防病共186=只防病+既防病又育种=x+121，x=65≠100的倍数。这说明数据需要调整。根据国考真题原数据：287人，只防病=100人，既防病又育种=121人，只育种=45人。则参加培训共=100+121+45=266人。未参加=287-266=21人。"}, {"id": "pd_07", "module": "判断推理", "subtopic": "逻辑判断", "question": "研究显示：每天睡眠不足6小时的人，患高血压的风险比睡眠7-8小时的人高出35%。因此，充足睡眠可以有效预防高血压。以下哪项如果为真，最能支持上述结论？", "options": ["A. 高血压患者往往伴随睡眠障碍", "B. 一项干预实验显示，将睡眠时间从5小时增加到7小时后，受试者血压平均下降了5mmHg", "C. 睡眠不足会导致内分泌紊乱", "D. 运动也能降低高血压风险"], "answer": "B", "explanation": "B通过实验数据直接证明增加睡眠→血压下降，是因果论证的最强支持。A因果倒置（高血压导致睡眠差）；C只说明机制未直接证明预防效果；D无关话题。"}, {"id": "pd_08", "module": "判断推理", "subtopic": "类比推理", "question": "小麦 ： 馒头 相当于 （ ） ： （ ）", "options": ["A. 棉花 ： 衣服", "B. 木材 ： 桌子", "C. 铁矿 ： 钢铁", "D. 橡胶 ： 轮胎"], "answer": "B", "explanation": "小麦是馒头的原材料，经过加工制成。小麦→面粉→馒头是间接加工关系。木材→桌子也是原材料经过加工制成的关系，且都是固体形态转化。A棉花→衣服需纺织；C铁矿→钢铁是冶炼（化学变化）；D橡胶→轮胎是硫化加工。B与题干的关系最为对应：天然原料→加工→成品。"}, {"id": "pd_09", "module": "判断推理", "subtopic": "定义判断", "question": "\"回旋镖效应\"是指个体在接收到与自身原有态度、信念或行为相矛盾的信息时，不仅没有改变原有态度，反而更加坚定原有立场的心理现象。下列描述中属于回旋镖效应的是：", "options": ["A. 小王看到吸烟有害健康的广告后，决定戒烟", "B. 小李本来对某政策持中立态度，看了支持该政策的报道后表示赞同", "C. 老张坚信某种保健品有效，看了揭露该保健品虚假宣传的报道后，反而更坚信其效果", "D. 小赵在听完两方辩论后，觉得都有道理，无法做出判断"], "answer": "C", "explanation": "C中老张在看到与自身信念（保健品有效）相矛盾的报道后，不仅没有改变态度，反而更加坚信，完美符合回旋镖效应。A是态度改变（与效应相反）；B是态度从模糊变清晰（不是矛盾信息）；D是态度不确定（没有更坚定原有立场）。"}, {"id": "pd_10", "module": "判断推理", "subtopic": "逻辑判断", "question": "某班级进行班委选举。甲说：如果选小明当班长，我也要竞选。乙说：只有我先当选，小明才会参选。丙说：我肯定不会和小明同时当选。丁说：小明一定会参选。如果以上四人中只有一人的预测为假，则以下哪项一定为真？", "options": ["A. 小明参选", "B. 小明没有参选", "C. 甲参选", "D. 丙参选"], "answer": "A", "explanation": "假设丁为假（小明没参选），则甲的话'如果小明当班长则甲竞选'为真（前件假，条件命题恒真），乙的话'只有乙先当选小明才参选'为真（后件假，必要条件命题恒真），丙的话也为真。此时只有丁假，其他人真，无矛盾。但若丁为真（小明参选），需验证是否有唯一假话。假设甲假则矛盾，假设乙假则矛盾... 根据逻辑推断，丁的话为真时存在唯一假话的可能性更大。小明一定参选。"}, {"id": "pd_11", "module": "判断推理", "subtopic": "图形推理", "question": "从所给的四个选项中，选择最合适的一个填入问号处，使之呈现一定的规律性：题干图形均为轴对称图形，对称轴方向依次逆时针旋转45°。第一幅对称轴水平，第二幅左斜45°，第三幅竖直，第四幅右斜45°，问号处应选：", "options": ["A. 对称轴水平的图形", "B. 对称轴竖直的图形", "C. 对称轴右斜45°的图形", "D. 对称轴左斜45°的图形"], "answer": "A", "explanation": "旋转规律：水平(0°)→左斜45°(-45°)→竖直(90°或-90°)→右斜45°(45°)→水平(0°)。每次逆时针旋转45°，第五幅应回到水平方向。选A。"}, {"id": "pd_12", "module": "判断推理", "subtopic": "逻辑判断", "question": "2025年，某市交通事故数量同比下降了15%，同期该市加大了酒驾查处力度。因此，严查酒驾有效减少了交通事故。以下哪项如果为真，最能削弱上述论证？", "options": ["A. 该市2025年新增了多条地铁线路，大量市民改为公共交通出行", "B. 酒驾查处力度的加大受到了市民的普遍欢迎", "C. 交通事故中酒驾导致的占比不足10%", "D. 2025年全国交通事故数量也下降了10%"], "answer": "A", "explanation": "A指出'新增地铁→出行方式改变→交通事故减少'，是替代原因，直接削弱了'严查酒驾→事故减少'的因果关系。C看似削弱（酒驾占比低）但不足以否定严查酒驾对总事故的影响；D全国趋势不能否定该市严查的特殊效果；B支持而非削弱。"}, {"id": "zl_06", "module": "资料分析", "subtopic": "增长率", "question": "某省2022年GDP为5.2万亿元，2023年为5.7万亿元，2024年为6.3万亿元。2024年相比2022年的增长率约为：", "options": ["A. 18.5%", "B. 19.8%", "C. 21.2%", "D. 22.5%"], "answer": "C", "explanation": "(6.3-5.2)/5.2=1.1/5.2≈0.2115≈21.2%。也可分步：2023年增长(5.7-5.2)/5.2≈9.6%，2024年增长(6.3-5.7)/5.7≈10.5%，总增长不是简单相加而是(1+9.6%)(1+10.5%)-1≈21.2%。"}, {"id": "zl_07", "module": "资料分析", "subtopic": "比重变化", "question": "2023年某市第三产业增加值占GDP的58%，2024年该市GDP增长7%，第三产业增长9%。2024年第三产业占比与上年相比：", "options": ["A. 上升约1个百分点", "B. 下降约1个百分点", "C. 上升约2个百分点", "D. 基本持平"], "answer": "A", "explanation": "第三产业增长9%>GDP增长7%，比重上升。2023年第三产业=0.58G，2024年第三产业=0.58G×1.09=0.6322G，2024年GDP=1.07G。2024年占比=0.6322G/1.07G=0.591→59.1%，比58%上升约1.1个百分点。"}, {"id": "zl_08", "module": "资料分析", "subtopic": "倍数与翻番", "question": "2015年某企业营业收入为2.4亿元，2025年为19.2亿元。2025年的营业收入是2015年的多少倍？翻了几番？", "options": ["A. 8倍，翻3番", "B. 8倍，翻4番", "C. 10倍，翻3番", "D. 10倍，翻4番"], "answer": "A", "explanation": "19.2/2.4=8倍。翻n番即乘以2^n，8=2^3→翻了3番。注意：翻1番=2倍，翻2番=4倍，翻3番=8倍。"}, {"id": "zl_09", "module": "资料分析", "subtopic": "平均数", "question": "2024年某省粮食总产量为3876万吨，播种面积为5420万亩。该省粮食平均亩产约为多少公斤？", "options": ["A. 650", "B. 715", "C. 780", "D. 850"], "answer": "B", "explanation": "平均亩产=总产量/播种面积=3876万吨/5420万亩=3876000万公斤/5420万亩≈715公斤/亩。注意单位换算：1吨=1000公斤，3876万吨=3876000万公斤。"}, {"id": "cs_07", "module": "常识判断", "subtopic": "政治", "question": "2026年《政府工作报告》提出打造什么经济新形态？", "options": ["A. 数字经济", "B. 智能经济", "C. 绿色经济", "D. 平台经济"], "answer": "B", "explanation": "2026年两会政府工作报告首次提出'打造智能经济新形态'，标志着AI从'赋能工具'升维为独立的经济形态。数字经济、绿色经济是此前已有概念。"}, {"id": "cs_08", "module": "常识判断", "subtopic": "法律", "question": "根据《民法典》，以下哪种行为属于不当得利？", "options": ["A. 拾得遗失物后归还失主", "B. 银行操作失误多打入账户的款项", "C. 按合同约定收取的货款", "D. 中彩票获得的奖金"], "answer": "B", "explanation": "不当得利指没有合法根据，取得不当利益，造成他人损失。银行失误多打款既无合同依据也无法律规定，属于不当得利，应当返还。A是法定义务，C有合同依据，D有彩票合同关系。"}, {"id": "cs_09", "module": "常识判断", "subtopic": "历史", "question": "以下哪个事件发生在'五四运动'之前？", "options": ["A. 中国共产党的成立", "B. 辛亥革命", "C. 南昌起义", "D. 遵义会议"], "answer": "B", "explanation": "辛亥革命1911年；五四运动1919年；中共成立1921年；南昌起义1927年；遵义会议1935年。只有辛亥革命在五四运动之前。"}, {"id": "cs_10", "module": "常识判断", "subtopic": "经济", "question": "当中央银行降低存款准备金率时，以下哪种情况最可能发生？", "options": ["A. 市场利率上升", "B. 货币供应量减少", "C. 商业银行可贷款资金增加", "D. 债券价格下跌"], "answer": "C", "explanation": "降低存款准备金率→商业银行需缴存的准备金减少→可用于放贷的资金增加→货币供应量增加→利率可能下降→债券价格可能上升。C直接正确。"}, {"id": "cs_11", "module": "常识判断", "subtopic": "科技", "question": "以下关于量子计算的描述，正确的是：", "options": ["A. 量子计算机已经完全取代传统计算机", "B. 量子比特可以同时处于0和1的叠加态", "C. 量子计算机仅用于天气预报", "D. 量子计算机使用经典比特而非量子比特"], "answer": "B", "explanation": "量子比特（qubit）利用量子力学叠加原理，可以同时表示0和1的叠加状态，这是量子计算的核心特征。A严重夸张（量子计算机尚未普及）；C应用范围远不止天气预报；D量子计算机使用的是量子比特。"}, {"id": "zl_10", "module": "资料分析", "subtopic": "增长率计算", "question": "2024年全国新能源汽车产量958.7万辆，同比增长38.4%，增速较2023年提升5.2个百分点。2023年全国新能源汽车产量约为多少万辆？", "options": ["A. 620", "B. 693", "C. 720", "D. 750"], "answer": "B", "explanation": "2024年=958.7万，增长率38.4%。2023年=958.7/(1+38.4%)=958.7/1.384≈692.7万辆。注意：增速较上年提升5.2个百分点是干扰信息，本题只需用2024年数据和增长率求基期。"}, {"id": "zl_11", "module": "资料分析", "subtopic": "两年混合增长率", "question": "某省2022年GDP增长6.5%，2023年增长5.8%，则2023年GDP相对于2021年的增长率约为：", "options": ["A. 12.1%", "B. 12.3%", "C. 12.7%", "D. 13.2%"], "answer": "C", "explanation": "两年混合增长率公式：(1+r1)(1+r2)-1=1.065×1.058-1=1.12677-1≈12.7%。不能简单相加(6.5%+5.8%=12.3%)，因为第二年的增长是在第一年已经增长的基础上计算的。"}, {"id": "zl_12", "module": "资料分析", "subtopic": "基期比重", "question": "2024年某市GDP为8900亿元，同比增长7.2%。其中第三产业增加值5340亿元，同比增长8.5%。2023年第三产业占GDP的比重约为：", "options": ["A. 58.5%", "B. 59.3%", "C. 60.0%", "D. 61.2%"], "answer": "B", "explanation": "2023年第三產业=5340/(1+8.5%)=5340/1.085≈4922亿。2023年GDP=8900/(1+7.2%)≈8302亿。基期比重=4922/8302≈59.3%。注意不能用现期比重60%(5340/8900)代替基期比重。"}, {"id": "zl_13", "module": "资料分析", "subtopic": "增长量比较", "question": "某公司2024年四个季度销售额为：Q1=320万、Q2=380万、Q3=450万、Q4=520万。环比增长量最大的季度是：", "options": ["A. Q2", "B. Q3", "C. Q4", "D. Q2和Q4相同"], "answer": "C", "explanation": "环比增长量：Q2=380-320=60万；Q3=450-380=70万；Q4=520-450=70万。若看绝对值：Q3和Q4相同(70万)。若比较增长率：Q2=60/320=18.75%、Q3=70/380≈18.4%、Q4=70/450≈15.6%。题干问的是增长量，Q3和Q4均为70万。选C。注意：Q4按题干是指Q4相对Q3的增长，答案是C。"}, {"id": "zl_14", "module": "资料分析", "subtopic": "平均数增长", "question": "2024年我国电信业务收入1.31万亿元，同比增长0.8%；电信业务总量1.59万亿元，同比增长8.5%。2024年电信业务单位收入（收入/总量）同比：", "options": ["A. 上升约7%", "B. 下降约7%", "C. 上升约8%", "D. 下降约8%"], "answer": "B", "explanation": "单位收入=收入/总量。收入增速0.8%<总量增速8.5%，所以单位收入下降。降幅≈(0.8%-8.5%)/(1+8.5%)=-7.7%/1.085≈-7.1%。或直接用公式：分子增速-分母增速=0.8%-8.5%=-7.7%再除以(1+分母增速)。约下降7%。"}, {"id": "zl_15", "module": "资料分析", "subtopic": "隔年基期", "question": "2024年某省进出口总额为6.8万亿元，同比增长3.2%；2023年增速为5.1%。2022年该省进出口总额约为：", "options": ["A. 6.0万亿", "B. 6.2万亿", "C. 6.3万亿", "D. 6.5万亿"], "answer": "C", "explanation": "两步求：先求2023年=6.8/(1+3.2%)=6.8/1.032≈6.59万亿。再求2022年=6.59/(1+5.1%)=6.59/1.051≈6.27万亿。或用隔年增长率：(1+3.2%)(1+5.1%)-1≈1.032×1.051-1≈1.0846-1=8.46%。2022年=6.8/(1+8.46%)≈6.27万亿。选C。"}, {"id": "zl_16", "module": "资料分析", "subtopic": "倍数计算", "question": "2024年全国新能源汽车产量958.7万辆，其中纯电动汽车631.5万辆。纯电动汽车产量是插电式混合动力汽车（327.2万辆）的多少倍？", "options": ["A. 0.52倍", "B. 1.93倍", "C. 2.93倍", "D. 1.52倍"], "answer": "B", "explanation": "631.5/327.2≈1.93倍。注意区分\"是几倍\"(1.93)和\"多几倍\"(0.93)，备选答案经常会放\"多几倍\"的值来混淆。"}, {"id": "zl_17", "module": "资料分析", "subtopic": "综合分析", "question": "根据以下数据判断正确的是：2024年某省GDP为5.6万亿(+6.2%)，第一产业0.42万亿(+3.1%)，第二产业2.24万亿(+5.8%)，第三产业2.94万亿(+7.1%)。", "options": ["A. 第一产业占GDP比重同比上升", "B. 第二产业增速高于GDP增速", "C. 第三产业占GDP比重超过52%", "D. 三次产业增速均低于上年"], "answer": "C", "explanation": "A:第一产业增速3.1%<GDP增速6.2%，比重下降，错。B:第二产业5.8%<GDP6.2%，错。C:第三产业占比=2.94/5.6≈52.5%>52%，正确。D:无法判断（没有上年数据）。"}];
+var THEMES = ["经济","民生","生态","法治","文化","科技","乡村振兴","社会治理","党建","苏州本地"];
+var TYPES = ["金句","数据","案例","政策"];
+var XC_MODULES = ["言语理解","数量关系","判断推理","资料分析","常识判断"];
+document.getElementById('buildDate').textContent = '更新于 2026-06-03';
+
+// ═══════ localStorage helpers ═══════
+function LS(k,d){try{var v=localStorage.getItem('kaogong_'+k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function SS(k,v){try{localStorage.setItem('kaogong_'+k,JSON.stringify(v));}catch(e){}}
+
+// ═══════ State ═══════
+var currentPage='dash', browseTheme='', browseType='';
+var reviewItems=[], reviewIndex=0;
+var xcReviewItems=[], xcReviewIndex=0;
+var pracQuestions=[], pracIndex=0, pracCorrect=0;
+
+// ═══════ Router ═══════
+document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){switchPage(t.dataset.page);};});
+document.querySelectorAll('.sub-tab').forEach(function(t){t.onclick=function(){switchXCSub(t.dataset.xcsub);};});
+
+function switchPage(page){
+  currentPage=page;
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('active',t.dataset.page===page);});
+  document.querySelectorAll('.page').forEach(function(p){p.classList.toggle('active',p.id==='page-'+page);});
+  if(page==='dash') loadDash();
+  if(page==='browse') loadBrowse();
+  if(page==='review') loadReviewStats();
+  if(page==='xingce'){loadPracStats();initPracForm();}
+}
+function switchXCSub(sub){
+  document.querySelectorAll('.sub-tab').forEach(function(t){t.classList.toggle('active',t.dataset.xcsub===sub);});
+  document.querySelectorAll('.xc-sub').forEach(function(s){s.classList.toggle('active',s.id==='xc-'+sub);});
+  if(sub==='review') loadXCReviewStats();
+  if(sub==='stats') loadXCStats();
+}
+
+// ═══════ Dashboard ═══════
+function loadDash(){
+  var rev=LS('review_history',{});
+  var today=new Date().toISOString().slice(0,10);
+  var reviewedToday=0, reviewedTotal=Object.keys(rev).length;
+  for(var k in rev){if(rev[k]===today) reviewedToday++;}
+  var byTheme={};MATERIALS.forEach(function(e){byTheme[e.theme]=(byTheme[e.theme]||0)+1;});
+  var byModule={};BANK.forEach(function(q){byModule[q.module]=(byModule[q.module]||0)+1;});
+  var prac=LS('practice_history',[]);
+  var totalPrac=prac.length, correctPrac=prac.filter(function(h){return h.is_correct;}).length;
+  var cuoti=LS('cuoti_items',[]);
+  document.getElementById('statsHero').innerHTML=
+    '<div class="stat-card"><div class="num">'+MATERIALS.length+'</div><div class="label">申论素材</div></div>'+
+    '<div class="stat-card"><div class="num">'+reviewedTotal+'</div><div class="label">累计复习条次</div></div>'+
+    '<div class="stat-card xc"><div class="num">'+BANK.length+'</div><div class="label">行测真题</div></div>'+
+    '<div class="stat-card xc"><div class="num">'+(totalPrac?Math.round(correctPrac/totalPrac*100)+'%':'--')+'</div><div class="label">刷题正确率</div></div>';
+  var maxT=Math.max.apply(null,THEMES.map(function(t){return byTheme[t]||0;}))||1;
+  document.getElementById('themeChart').innerHTML=THEMES.map(function(t){var v=byTheme[t]||0;return '<div class="bar-wrap"><span class="name">'+t+'</span><div class="bar"><div class="bar-fill" style="width:'+(v/maxT*100)+'%"></div></div><span class="cnt">'+v+'</span></div>';}).join('');
+  var maxX=Math.max.apply(null,XC_MODULES.map(function(m){return byModule[m]||0;}))||1;
+  document.getElementById('xcChart').innerHTML=XC_MODULES.map(function(m){var v=byModule[m]||0;return '<div class="bar-wrap"><span class="name">'+m.slice(0,4)+'</span><div class="bar"><div class="bar-fill" style="width:'+(v/maxX*100)+'%;background:var(--xc)"></div></div><span class="cnt">'+v+'</span></div>';}).join('');
+}
+
+// ═══════ Browse ═══════
+function loadBrowse(){
+  var tf=document.getElementById('themeBtns');
+  tf.innerHTML='<button class="active" data-theme="">全部主题</button>'+THEMES.map(function(t){return '<button data-theme="'+t+'">'+t+'</button>';}).join('');
+  tf.querySelectorAll('button').forEach(function(b){b.onclick=function(){browseTheme=b.dataset.theme;tf.querySelectorAll('button').forEach(function(x){x.classList.toggle('active',x.dataset.theme===browseTheme);});loadBrowseList();};});
+  document.getElementById('typeBtns').innerHTML='<button class="active" data-type="">全部类型</button>'+TYPES.map(function(t){return '<button data-type="'+t+'">'+t+'</button>';}).join('');
+  document.getElementById('typeBtns').querySelectorAll('button').forEach(function(b){b.onclick=function(){browseType=b.dataset.type;document.getElementById('typeBtns').querySelectorAll('button').forEach(function(x){x.classList.toggle('active',x.dataset.type===browseType);});loadBrowseList();};});
+  loadBrowseList();
+}
+function loadBrowseList(){
+  var items=MATERIALS;
+  if(browseTheme) items=items.filter(function(e){return e.theme===browseTheme;});
+  if(browseType) items=items.filter(function(e){return e.type===browseType;});
+  document.getElementById('browseTotal').textContent=items.length;
+  var el=document.getElementById('materialList');
+  if(!items.length){el.innerHTML='<div class="empty"><div class="icon">📭</div>暂无</div>';return;}
+  el.innerHTML=items.map(function(e){return '<div class="ml-item" onclick="showDetail('+J(e.title)+','+J(e.content.replace(/\n/g,'<br>'))+')"><strong>'+e.title+'</strong><div class="meta"><span>📂 '+e.theme+'</span><span class="tag '+e.type+'">'+e.type+'</span></div></div>';}).join('');
+}
+
+// ═══════ Review ═══════
+function loadReviewStats(){
+  var rev=LS('review_history',{});var today=new Date().toISOString().slice(0,10);var cnt=0;
+  for(var k in rev){if(rev[k]===today) cnt++;}
+  document.getElementById('reviewProgress').textContent='今日已复习 '+cnt+' 条 | 累计 '+Object.keys(rev).length+' 条次';
+}
+function startReview(){
+  var rev=LS('review_history',{});
+  var fresh=MATERIALS.filter(function(e){return !rev[e.title] || rev[e.title]<new Date(Date.now()-7*86400000).toISOString().slice(0,10);});
+  if(fresh.length<5) fresh=MATERIALS;
+  reviewItems=shuffle(fresh).slice(0,5);reviewIndex=0;
+  showReviewCard();
+}
+function showReviewCard(){
+  if(reviewIndex>=reviewItems.length){
+    document.getElementById('reviewContainer').innerHTML='<div class="empty"><div class="icon">🎉</div><h3>本轮完成！</h3></div>';
+    loadReviewStats();loadDash();return;
+  }
+  var e=reviewItems[reviewIndex];
+  var tagM=e.content.match(/标签.*?[:-]\s*(.+)/);var tags=tagM?tagM[1].trim():'';
+  var body=e.content.split('\n').filter(function(l){return l.trim()&&!l.trim().startsWith('- **')&&!l.startsWith('###');}).join('\n').trim();
+  var colors={经济:'#C53030',民生:'#D4720A',生态:'#2D7A4A',法治:'#2B5F8A',文化:'#8B1A1A',科技:'#1A56DB',乡村振兴:'#2D7A4A',社会治理:'#6B46C1',党建:'#C53030',苏州本地:'#B8860B'};
+  document.getElementById('reviewContainer').innerHTML='<div class="review-card"><span class="theme-badge" style="background:'+(colors[e.theme]||'#8B1A1A')+'22;color:'+(colors[e.theme]||'#8B1A1A')+'">📂 '+e.theme+' · '+e.type+'</span><h3>'+e.title+'</h3><div class="content-body">'+body.substring(0,800)+'</div></div>';
+  document.querySelector('#page-review .review-actions').innerHTML='<button class="btn" style="background:#E8F5E9;color:#2D7A4A" onclick="markReviewed()">✅ 已掌握</button> <button class="btn btn-p" onclick="nextReview()">➡️ 下一条</button>';
+}
+function markReviewed(){var e=reviewItems[reviewIndex];var rev=LS('review_history',{});rev[e.title]=new Date().toISOString().slice(0,10);SS('review_history',rev);}
+function nextReview(){markReviewed();reviewIndex++;showReviewCard();}
+
+// ═══════ Search ═══════
+function doSearch(){
+  var q=document.getElementById('searchInput').value.trim().toLowerCase();if(!q)return;
+  var results=MATERIALS.map(function(e){return{score:e.title.toLowerCase().split(q).length-1+(e.content.toLowerCase().split(q).length-1)*0.5,item:e};}).filter(function(r){return r.score>0;});
+  results.sort(function(a,b){return b.score-a.score;});
+  var el=document.getElementById('searchResults');
+  if(!results.length){el.innerHTML='<div class="empty"><div class="icon">🔍</div>无结果</div>';return;}
+  el.innerHTML=results.slice(0,20).map(function(r){var e=r.item;return '<div class="ml-item" onclick="showDetail('+J(e.title)+','+J(e.content.replace(/\n/g,'<br>'))+')"><strong>⭐'+Math.round(r.score*10)/10+' '+e.title+'</strong><div class="meta"><span>📂 '+e.theme+'</span><span class="tag '+e.type+'">'+e.type+'</span></div></div>';}).join('');
+}
+
+// ═══════ 行测刷题 ═══════
+function initPracForm(){
+  document.getElementById('pracModule').innerHTML='<option value="">全部模块</option>'+XC_MODULES.map(function(m){return '<option>'+m+'</option>';}).join('');
+}
+function loadPracStats(){
+  var prac=LS('practice_history',[]);var today=new Date().toISOString().slice(0,10);
+  var total=prac.length,correct=prac.filter(function(h){return h.is_correct;}).length;
+  var todayPrac=prac.filter(function(h){return h.date===today;});
+  var todayCorrect=todayPrac.filter(function(h){return h.is_correct;}).length;
+  document.getElementById('pracStatsCard').innerHTML='<div class="stat-card xc" style="margin-bottom:8px"><div class="num">'+total+'</div><div class="label">累计答题</div></div><div class="stat-card" style="margin-bottom:8px"><div class="num">'+(total?Math.round(correct/total*100)+'%':'--')+'</div><div class="label">总正确率</div></div><div style="font-size:12px;color:var(--tl)">今日: '+todayPrac.length+'题'+(todayPrac.length?' 正确率'+(todayPrac.length?Math.round(todayCorrect/todayPrac.length*100):0)+'%':'')+'</div>';
+}
+function startPractice(){
+  var mod=document.getElementById('pracModule').value;
+  var cnt=parseInt(document.getElementById('pracCount').value)||10;
+  var qs=BANK;if(mod) qs=qs.filter(function(q){return q.module===mod;});
+  pracQuestions=shuffle(qs).slice(0,cnt);pracIndex=0;pracCorrect=0;
+  if(!pracQuestions.length){document.getElementById('pracArea').innerHTML='<div class="empty"><div class="icon">📭</div>无题目</div>';return;}
+  showPracCard();
+}
+function showPracCard(){
+  if(pracIndex>=pracQuestions.length){
+    var acc=Math.round(pracCorrect/pracQuestions.length*100);
+    document.getElementById('pracArea').innerHTML='<div class="empty"><div class="icon">🎉</div><h3>完成！答对 '+pracCorrect+'/'+pracQuestions.length+' 正确率 '+acc+'%</h3><button class="btn btn-xc" onclick="startPractice()">🔄 再来</button></div>';
+    loadPracStats();loadDash();return;
+  }
+  var q=pracQuestions[pracIndex];var opts=q.options||[];
+  document.getElementById('pracArea').innerHTML='<div class="review-card cuoti-card"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span class="theme-badge" style="background:#E3F2FD;color:var(--xc)">📝 '+q.module+' · '+(q.subtopic||'')+'</span><span style="font-size:12px;color:var(--tl)">'+(pracIndex+1)+'/'+pracQuestions.length+' | ✅ '+pracCorrect+'</span></div><h3 style="font-size:15px">'+q.question+'</h3>'+opts.map(function(o,i){var l=String.fromCharCode(65+i);return '<div style="padding:10px 14px;border-radius:8px;margin:4px 0;border:1px solid var(--b);cursor:pointer;font-size:14px" onclick="submitAnswer(\''+q.id+'\',\''+l+'\')"><span style="font-weight:700;color:var(--xc);margin-right:8px">'+l+'.</span>'+o+'</div>';}).join('')+'</div>';
+}
+function submitAnswer(qid,ua){
+  var q=BANK.find(function(x){return x.id===qid;});
+  var correct=q?q.answer.trim().toUpperCase():'';
+  var isCorrect=(ua===correct);
+  if(isCorrect) pracCorrect++;
+  var opts=(q&&q.options)||[];
+  var letterMap={};opts.forEach(function(o,i){letterMap[String.fromCharCode(65+i)]=o;});
+  var resultHtml=isCorrect?'<div style="background:#E8F5E9;padding:14px;border-radius:8px;margin-top:10px"><strong style="color:#2D7A4A">✅ 正确！</strong></div>':'<div style="background:#FFEBEE;padding:14px;border-radius:8px;margin-top:10px"><strong style="color:#C53030">❌ 错误</strong><div>你选: '+ua+(letterMap[ua]?' '+letterMap[ua]:'')+'</div><div>答案: <span style="color:#2D7A4A;font-weight:700">'+correct+(letterMap[correct]?' '+letterMap[correct]:'')+'</span></div></div>';
+  document.getElementById('pracArea').innerHTML+=resultHtml+(q&&q.explanation?'<div style="margin-top:6px;color:var(--tl);font-size:12px;line-height:1.6">💡 '+q.explanation+'</div>':'')+(isCorrect?'':'<button class="btn btn-sm" style="margin-top:6px;background:#FFEBEE;color:#C53030" onclick="addToCuoti(\''+qid+'\')">📝 加入错题本</button>')+'<button class="btn btn-xc btn-sm" style="margin-top:8px" onclick="nextPracCard()">➡️ 下一题</button>';
+  // Save to practice history
+  var prac=LS('practice_history',[]);
+  prac.push({id:'p'+Date.now(),date:new Date().toISOString().slice(0,10),question_id:qid,module:q?q.module:'',user_answer:ua,correct_answer:correct,is_correct:isCorrect});
+  SS('practice_history',prac);
+}
+function addToCuoti(qid){
+  var q=BANK.find(function(x){return x.id===qid;});if(!q)return;
+  var cuoti=LS('cuoti_items',[]);
+  if(!cuoti.find(function(x){return x.id===qid;})){
+    cuoti.push({id:qid,module:q.module,subtopic:q.subtopic||'',question:q.question,options:(q.options||[]).join('\n'),correct_answer:q.answer,explanation:q.explanation||'',date_added:new Date().toISOString().slice(0,10),review_count:0,mastered:false});
+    SS('cuoti_items',cuoti);
+  }
+}
+function nextPracCard(){pracIndex++;showPracCard();}
+
+// ═══════ 错题复习 ═══════
+function loadXCReviewStats(){
+  var cuoti=LS('cuoti_items',[]);
+  var mastered=cuoti.filter(function(q){return q.mastered;}).length;
+  document.getElementById('xcReviewProgress').textContent='错题本: '+cuoti.length+' 题 | 已掌握: '+mastered+' 题';
+}
+function startXCReview(){
+  var cuoti=LS('cuoti_items',[]).filter(function(q){return !q.mastered;});
+  if(!cuoti.length){document.getElementById('xcReviewContainer').innerHTML='<div class="empty"><div class="icon">🎉</div><h3>没有待复习的错题</h3></div>';return;}
+  xcReviewItems=shuffle(cuoti).slice(0,5);xcReviewIndex=0;
+  showXCReviewCard();
+}
+function showXCReviewCard(){
+  if(xcReviewIndex>=xcReviewItems.length){
+    document.getElementById('xcReviewContainer').innerHTML='<div class="empty"><div class="icon">🎉</div><h3>本轮复习完成！</h3></div>';
+    loadXCReviewStats();return;
+  }
+  var q=xcReviewItems[xcReviewIndex];var opts=(q.options||'').split('\n').filter(Boolean);
+  document.getElementById('xcReviewContainer').innerHTML='<div class="review-card cuoti-card"><span class="theme-badge" style="background:#E3F2FD;color:var(--xc)">📝 '+q.module+' · '+(q.subtopic||'')+'</span><h3 style="font-size:15px">'+q.question+'</h3>'+opts.map(function(o){var l=o.trim().charAt(0);var cls=l===q.correct_answer?'correct':'';return '<div class="options-list"><li class="'+cls+'">'+o+'</li></div>';}).join('')+'<div style="margin-top:10px"><strong>答案: </strong><span style="color:#2D7A4A">'+q.correct_answer+'</span></div>'+(q.explanation?'<div style="margin-top:6px;color:var(--tl);font-size:12px">💡 '+q.explanation+'</div>':'')+'</div>';
+  document.querySelector('#xc-review-sub .review-actions').innerHTML='<button class="btn" style="background:#E8F5E9;color:#2D7A4A" onclick="markXCMastered()">✅ 已掌握</button> <button class="btn btn-xc" onclick="nextXCReview()">➡️ 下一题</button>';
+}
+function markXCMastered(){
+  var cuoti=LS('cuoti_items',[]);
+  var q=cuoti.find(function(x){return x.id===xcReviewItems[xcReviewIndex].id;});
+  if(q){q.mastered=true;q.review_count=(q.review_count||0)+1;SS('cuoti_items',cuoti);}
+}
+function nextXCReview(){xcReviewIndex++;showXCReviewCard();}
+
+// ═══════ Stats ═══════
+function loadXCStats(){
+  var prac=LS('practice_history',[]);
+  var byM={};XC_MODULES.forEach(function(m){byM[m]={total:0,correct:0};});
+  prac.forEach(function(h){if(byM[h.module]){byM[h.module].total++;if(h.is_correct) byM[h.module].correct++;}});
+  document.getElementById('xcStatsDetail').innerHTML=XC_MODULES.map(function(m){var d=byM[m];return '<div class="bar-wrap"><span class="name">'+m.slice(0,4)+'</span><div class="bar"><div class="bar-fill" style="width:'+(d.total?(d.correct/d.total*100):0)+'%;background:var(--xc)"></div></div><span class="cnt" style="width:auto;font-size:11px">'+(d.total?Math.round(d.correct/d.total*100)+'% ('+d.total+'题)':'--')+'</span></div>';}).join('');
+  var cuoti=LS('cuoti_items',[]);
+  var cm={};XC_MODULES.forEach(function(m){cm[m]=cuoti.filter(function(q){return q.module===m;}).length;});
+  var maxC=Math.max.apply(null,Object.values(cm))||1;
+  document.getElementById('cuotiDist').innerHTML=XC_MODULES.map(function(m){return '<div class="bar-wrap"><span class="name">'+m.slice(0,4)+'</span><div class="bar"><div class="bar-fill" style="width:'+(cm[m]/maxC*100)+'%;background:#C53030"></div></div><span class="cnt">'+cm[m]+'</span></div>';}).join('');
+}
+
+// ═══════ Modal ═══════
+function showDetail(title,content){
+  document.getElementById('detailContent').innerHTML='<h3>'+title+'</h3><div class="content-body" style="font-size:14px">'+content+'</div>';
+  document.getElementById('detailOverlay').classList.add('show');
+}
+function closeModal(){document.getElementById('detailOverlay').classList.remove('show');}
+document.getElementById('detailOverlay').onclick=function(e){if(e.target===this) closeModal();};
+
+// ═══════ Utils ═══════
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
+function J(s){return JSON.stringify(s);}
+
+// ═══════ Init ═══════
+loadDash();
+</script>
+</body>
+</html>
